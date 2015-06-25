@@ -698,7 +698,7 @@ public class GenerateRandomDecimalMaskerGUI implements MaskerGUI {
 	    gridData.horizontalSpan = 8;
 		distributions.setLayoutData(gridData);
 		distributions.layout(true);
- 		
+		
  		// shift constant
  		label = new Label(mainComposite, SWT.NULL);
 		label.setText("Shift constant: ");
@@ -725,6 +725,6 @@ public class GenerateRandomDecimalMaskerGUI implements MaskerGUI {
 			}
 		});
       	
-      	return mainComposite;
+      	return mainComposite;	
 	}
 }

@@ -382,14 +382,13 @@ public class GenerateRandomDateMaskerGUI extends MaskerTool implements MaskerGUI
 		Composite distributions = MaskerTool.loadIntegerDistributions(8);
 		distributions.setParent(mainComposite);
 		
-		//final Combo dropdown = new Combo(mainComposite, SWT.DROP_DOWN);
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 	    gridData.horizontalSpan = 8;
 		distributions.setLayoutData(gridData);
 		distributions.layout(true);
-		
+	    
 		// baseDate
 		label = new Label(mainComposite, SWT.NULL);
 		label.setText("Base Date: ");

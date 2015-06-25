@@ -89,7 +89,31 @@ public class ReplaceDictMaskerGUI implements MaskerGUI {
 		Shell shell = new Shell ();
 		
 		final Composite mainComposite = new Composite(shell, SWT.NONE);
-      	mainComposite.setLayout(new GridLayout (9, false));
+      	mainComposite.setLayout(new GridLayout (3, false));
+      	
+      	Label label = new Label(mainComposite, SWT.NULL);
+		label.setText("Replacement dictionary: ");
+		
+		final Combo dropdown = new Combo(mainComposite, SWT.DROP_DOWN);
+		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+	    gridData.horizontalSpan = 2;
+	    dropdown.setLayoutData(gridData);
+	    dropdown.setText("Choose data type...");
+		String[] dataType = {	"Double",
+								"Date",
+								"String"
+								 };
+		for (String s: dataType) {
+			dropdown.add(s);
+		}
+		
+		label = new Label(mainComposite, SWT.NULL);
+	    
+	    final Text dictionary = new Text(mainComposite, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		gridData = new GridData(SWT.FILL, 0, false, false);
+		gridData.heightHint = 100;
+		gridData.widthHint = 100;
+		dictionary.setLayoutData(gridData);
       	
       	return mainComposite;
 	}

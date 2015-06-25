@@ -408,6 +408,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 2: // Cauchy Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double median, double scale [, double inverseCumAccuracy]");
@@ -451,6 +453,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 3: // Chi Squared Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double degreesOfFreedom [, double inverseCumAccuracy]");
@@ -485,6 +489,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 4: // Empirical Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int binCount");
@@ -497,6 +503,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 5: // Enumerated Real Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double[] singletons, double[] probabilites");
@@ -518,6 +526,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 6: // Exponential Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double mean [, double inverseCumAccuracy]");
@@ -552,6 +562,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 7: // F Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double numeratorDegreesOfFreedom, double denominatorDegreesOfFreedom [, double inverseCumAccuracy]");
@@ -595,6 +607,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 8: // Gamma Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double shape, double scale [, double inverseCumAccuracy]");
@@ -638,6 +652,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 9: // Levy Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": RandomGenerator rng, double mu, double c ");
@@ -658,6 +674,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 10: // Log Normal Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double scale, double shape [, double inverseCumAccuracy]");
@@ -701,9 +719,53 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 11: // Normal Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double mean, double sd [, double inverseCumAccuracy]");
+						c2.setLayout(new GridLayout (3, false));
+						
+						mean = new Spinner(c2, SWT.BORDER);
+						mean.setDigits(2);
+						mean.setMaximum(100000);
+						label2 = new Label(c2, SWT.NULL);
+						label2.setText("mean");
+						gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+					    gridData.horizontalSpan = 2;
+					    label2.setLayoutData(gridData);
+					    
+						Spinner sd = new Spinner(c2, SWT.BORDER);
+						sd.setDigits(2);
+						sd.setMaximum(100000);
+						label2 = new Label(c2, SWT.NULL);
+						label2.setText("sd");
+						gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+					    gridData.horizontalSpan = 2;
+					    label2.setLayoutData(gridData);
+						
+						final Button checkInverseCumAccuracy91 = new Button(c2, SWT.CHECK);
+						final Spinner inverseCumAccuracy91 = new Spinner(c2, SWT.BORDER);
+						inverseCumAccuracy91.setEnabled(false);
+						inverseCumAccuracy91.setDigits(2);
+						inverseCumAccuracy91.setMaximum(100000);
+						label2 = new Label(c2, SWT.NULL);
+						label2.setText("maximum absolute error\n in inverse cumulative\n probability estimates");
+						
+						checkInverseCumAccuracy91.addSelectionListener(new SelectionAdapter() {
+							public void widgetSelected(SelectionEvent event) {
+								if (checkInverseCumAccuracy91.getSelection()) {
+									inverseCumAccuracy91.setEnabled(true);
+								} else {
+									inverseCumAccuracy91.setEnabled(false);
+								}
+							}
+						});
+						
+						c2.layout();
+						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 12: // Pareto Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double scale, double shape [, double inverseCumAccuracy]");
@@ -747,6 +809,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 13: // T Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double degreesOfFreedom [, double inverseCumAccuracy]");
@@ -781,6 +845,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 14: // Triangular Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double a, double c, double b");
@@ -807,6 +873,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 15: // Uniform Real Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double lower, double upper [, double inverseCumAccuracy]");
@@ -851,6 +919,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 16: // Weibull Distribution
 						System.out.println("Needed parameters for " + dropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double alpha, double beta [, double inverseCumAccuracy]");
@@ -895,6 +965,8 @@ public class MaskerTool {
 						
 						c2.layout();
 						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 				}
 				mainComposite.layout(true, true);

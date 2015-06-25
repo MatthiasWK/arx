@@ -149,7 +149,91 @@ public class ReplaceInstMaskerGUI implements MaskerGUI {
 		Shell shell = new Shell ();
 		
 		final Composite mainComposite = new Composite(shell, SWT.NONE);
-      	mainComposite.setLayout(new GridLayout (9, false));
+      	mainComposite.setLayout(new GridLayout (3, false));
+      	
+      	Label label = new Label(mainComposite, SWT.NULL);
+		label.setText("Replacement value: ");
+		
+		final Combo dropdown = new Combo(mainComposite, SWT.DROP_DOWN);
+		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+	    gridData.horizontalSpan = 2;
+	    dropdown.setLayoutData(gridData);
+	    dropdown.setText("Choose data type...");
+		String[] dataType = {	"Double",
+								"Date",
+								"String"
+								 };
+		for (String s: dataType) {
+			dropdown.add(s);
+		}
+		
+		label = new Label(mainComposite, SWT.NULL);
+		
+		final Composite c2 = new Composite(mainComposite, SWT.NONE);
+		gridData = new GridData();
+	    gridData.horizontalSpan = 2;
+	    c2.setLayoutData(gridData);
+	    
+	    dropdown.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				int selectedIndex = dropdown.getSelectionIndex();
+				for (Control child: c2.getChildren()) {
+					child.dispose();
+				}
+				switch (selectedIndex) {
+					case 0: // Double
+						c2.setLayout(new RowLayout());
+						
+						final Spinner replacementValue = new Spinner(c2, SWT.BORDER);
+						replacementValue.setDigits(2);
+						replacementValue.setMaximum(100000);
+						replacementValue.addSelectionListener(new SelectionAdapter() {
+							public void widgetSelected(SelectionEvent e) {
+								replacementValueDouble = replacementValue.getText();
+							}
+						});
+						
+						c2.layout();
+						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						break;
+					case 1: // Date
+						c2.setLayout(new RowLayout());
+						
+						final DateTime replacementValue2 = new DateTime(c2, SWT.CALENDAR);
+						replacementValue2.addSelectionListener(new SelectionAdapter() {
+							public void widgetSelected(SelectionEvent e) {
+								replacementValueDate = replacementValue2.getDay() + "." +
+														(replacementValue2.getMonth()+1) + "." +
+														replacementValue2.getYear();
+							}
+						});
+						
+						c2.layout();
+						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						break;
+					case 2: // String
+						c2.setLayout(new RowLayout());
+						
+						final Text replacementValue3 = new Text(c2, SWT.BORDER);
+						replacementValue3.addModifyListener(new ModifyListener() {
+							public void modifyText(ModifyEvent e) {
+								replacementValueString = replacementValue3.getText();
+							}
+						});
+						
+						c2.layout();
+						c2.setSize(c2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						mainComposite.layout();
+						mainComposite.setSize(mainComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						break;
+				}
+				mainComposite.layout(true, true);
+			}
+	    });
       	
       	return mainComposite;
 	}
