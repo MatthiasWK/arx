@@ -350,7 +350,7 @@ public class MaskerTool {
 			dropdown.add(s);
 		}
 		
-		// composite for parameters of integer distribution
+		// composite for parameters of real distribution
 		final Composite c2 = new Composite(mainComposite, SWT.NONE);
 		gridData = new GridData();
 	    gridData.horizontalSpan = comboHorizontalSpan;

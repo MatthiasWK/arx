@@ -691,6 +691,39 @@ public class GenerateRandomDecimalMaskerGUI implements MaskerGUI {
  		label.setText("Real distribution: ");
  		Composite distributions = MaskerTool.loadRealDistributions(8);
  		distributions.setParent(mainComposite);
+ 		
+		GridData gridData = new GridData();
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.grabExcessHorizontalSpace = true;
+	    gridData.horizontalSpan = 8;
+		distributions.setLayoutData(gridData);
+		distributions.layout(true);
+ 		
+ 		// shift constant
+ 		label = new Label(mainComposite, SWT.NULL);
+		label.setText("Shift constant: ");
+		
+		final Button checkShiftConstant = new Button(mainComposite, SWT.CHECK);
+		
+		final Spinner shiftConstant = new Spinner(mainComposite, SWT.BORDER);
+		shiftConstant.setEnabled(false);
+		shiftConstant.setMaximum(100000);
+		
+		label = new Label(mainComposite, SWT.NULL);
+		label.setText("(int)");
+		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+	    gridData.horizontalSpan = 6;
+	    label.setLayoutData(gridData);
+		
+		checkShiftConstant.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				if (checkShiftConstant.getSelection()) {
+					shiftConstant.setEnabled(true);
+				} else {
+					shiftConstant.setEnabled(false);
+				}
+			}
+		});
       	
       	return mainComposite;
 	}
