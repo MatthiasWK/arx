@@ -18,10 +18,17 @@ public class MaskerTool {
 									"GenerateRandomIntegerDecimalMasker",
 									"GenerateRandomStringMakser",
 									"ReplaceDictMasker",
-									"ReplaceInstMasker"
+									"ReplaceInstMasker",
+									/*"ConstantShiftDateMasker",
+									"ConstantShiftDecimalMasker",
+									"MatchAndReplaceStringMasker",
+									"RandomShiftDateMasker",
+									"RandomShiftDecimalMasker",
+									"ShuffleMasker",*/
+									"SplitAndReplaceStringMasker"
 								};
 
-	    for (int loopIndex = 0; loopIndex < 6; loopIndex++) {
+	    for (int loopIndex = 0; loopIndex < 7; loopIndex++) {
 	    	TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
 	      	tabItem.setText(maskerTypes[loopIndex]);
 	      
@@ -45,6 +52,28 @@ public class MaskerTool {
 	      		case 5:
 	      			gui = new ReplaceInstMaskerGUI();
 	      			break;
+	      		/*case 6:
+	      			gui = new ConstantShiftDateMaskerGUI();
+	      			break;
+	      		case 6:
+	      			gui = new ConstantShiftDecimalMaskerGUI();
+	      			break;
+	      		case 6:
+	      			gui = new MatchAndReplaceStringMaskerGUI();
+	      			break;
+	      		case 6:
+	      			gui = new RandomShiftDateMaskerGUI();
+	      			break;
+	      		case 6:
+	      			gui = new RandomShiftDecimalMaskerGUI();
+	      			break;
+	      		case 6:
+	      			gui = new ShuffleMaskerGUI();
+	      			break;*/
+	      		case 6:
+	      			gui = new SplitAndReplaceStringMaskerGUI();
+	      			break;
+	      			
 	      	}
 	      	Composite c = gui.loadMasker();
 	      	c.setParent(tabFolder);
