@@ -19,16 +19,16 @@ public class MaskerTool {
 									"GenerateRandomStringMakser",
 									"ReplaceDictMasker",
 									"ReplaceInstMasker",
-									/*"ConstantShiftDateMasker",
+									"ConstantShiftDateMasker",
 									"ConstantShiftDecimalMasker",
 									"MatchAndReplaceStringMasker",
 									"RandomShiftDateMasker",
 									"RandomShiftDecimalMasker",
-									"ShuffleMasker",*/
+									"ShuffleMasker",
 									"SplitAndReplaceStringMasker"
 								};
 
-	    for (int loopIndex = 0; loopIndex < 7; loopIndex++) {
+	    for (int loopIndex = 0; loopIndex < 13; loopIndex++) {
 	    	TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
 	      	tabItem.setText(maskerTypes[loopIndex]);
 	      
@@ -52,25 +52,25 @@ public class MaskerTool {
 	      		case 5:
 	      			gui = new ReplaceInstMaskerGUI();
 	      			break;
-	      		/*case 6:
+	      		case 6:
 	      			gui = new ConstantShiftDateMaskerGUI();
 	      			break;
-	      		case 6:
+	      		case 7:
 	      			gui = new ConstantShiftDecimalMaskerGUI();
 	      			break;
-	      		case 6:
+	      		case 8:
 	      			gui = new MatchAndReplaceStringMaskerGUI();
 	      			break;
-	      		case 6:
+	      		case 9:
 	      			gui = new RandomShiftDateMaskerGUI();
 	      			break;
-	      		case 6:
+	      	    case 10:
 	      			gui = new RandomShiftDecimalMaskerGUI();
 	      			break;
-	      		case 6:
+	      		case 11:
 	      			gui = new ShuffleMaskerGUI();
-	      			break;*/
-	      		case 6:
+	      			break;
+	      		case 12:
 	      			gui = new SplitAndReplaceStringMaskerGUI();
 	      			break;
 	      			
@@ -86,7 +86,7 @@ public class MaskerTool {
 	        }
 	      });
 	    
-	    tabFolder.pack();
+	    tabFolder.setSize(shell.getSize());
 		shell.pack();
 	    shell.open();
 	    while (!shell.isDisposed()) {
@@ -104,7 +104,7 @@ public class MaskerTool {
 		
 		final Combo dropdown = new Combo(mainComposite, SWT.DROP_DOWN);
 		GridData gridData = new GridData();
-		gridData.horizontalAlignment = GridData.FILL;
+		gridData.horizontalAlignment = GridData.BEGINNING;
 		gridData.grabExcessHorizontalSpace = true;
 	    gridData.horizontalSpan = comboHorizontalSpan;
 	    dropdown.setLayoutData(gridData);
@@ -352,7 +352,7 @@ public class MaskerTool {
 		
 		final Combo dropdown = new Combo(mainComposite, SWT.DROP_DOWN);
 		GridData gridData = new GridData();
-		gridData.horizontalAlignment = GridData.FILL;
+		gridData.horizontalAlignment = GridData.BEGINNING;
 		gridData.grabExcessHorizontalSpace = true;
 	    gridData.horizontalSpan = comboHorizontalSpan;
 	    dropdown.setLayoutData(gridData);
