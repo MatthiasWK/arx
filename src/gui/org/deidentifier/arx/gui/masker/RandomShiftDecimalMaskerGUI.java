@@ -515,7 +515,6 @@ public class RandomShiftDecimalMaskerGUI implements MaskerGUI{
 		display.dispose ();
 	}
 
-	@Override
 	public Composite loadMasker() {
 		Shell shell = new Shell ();
 		
