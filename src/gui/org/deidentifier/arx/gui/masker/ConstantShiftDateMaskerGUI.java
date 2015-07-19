@@ -11,7 +11,7 @@ import java.util.Date;
 
 import org.deidentifier.arx.masking.ConstantShiftDateMasker;
 
-public class ConstantShiftDateMaskerGUI extends MaskerGUI{
+public class ConstantShiftDateMaskerGUI implements ConfigurationComponent{
 	
 	private Label lbl;
 	
@@ -20,7 +20,8 @@ public class ConstantShiftDateMaskerGUI extends MaskerGUI{
 	
 	private Spinner[] spnPeriodInput;
 	private Spinner spnDistanceInput;
-	
+
+	private Composite cmpRoot;
 	
 	public ConstantShiftDateMaskerGUI(Composite root) {
 		
@@ -73,6 +74,23 @@ public class ConstantShiftDateMaskerGUI extends MaskerGUI{
         }
         );
 		
+	}
+
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }
 

@@ -6,7 +6,7 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.deidentifier.arx.masking.SplitAndReplaceStringMasker;
 
-public class SplitAndReplaceStringMaskerGUI extends MaskerGUI{
+public class SplitAndReplaceStringMaskerGUI implements ConfigurationComponent{
 
 	private Label lbl;
 	
@@ -16,6 +16,8 @@ public class SplitAndReplaceStringMaskerGUI extends MaskerGUI{
 	private Spinner spnReplaceGroup;
 	
 	private Button btnEachCharacter;
+
+	private Composite cmpRoot;
 	
 	public SplitAndReplaceStringMaskerGUI(Composite root) {
 		
@@ -44,5 +46,21 @@ public class SplitAndReplaceStringMaskerGUI extends MaskerGUI{
 		this.btnEachCharacter = new Button(this.cmpRoot, SWT.CHECK);
 		this.btnEachCharacter.setText("replace each character");
 		
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }

@@ -32,7 +32,7 @@ public class MaskerTool {
 	    	TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
 	      	tabItem.setText(maskerTypes[loopIndex]);
 	      
-	      	MaskerGUI gui = new MaskerGUI();
+	      	ConfigurationComponent gui = null;
 	      	switch (loopIndex) {
 	      		case 0:
 	      			gui = new GenerateRandomDateMaskerGUI(tabFolder);
@@ -75,8 +75,7 @@ public class MaskerTool {
 	      			break;
 	      			
 	      	}
-	      	
-	      	tabItem.setControl(gui.cmpRoot);
+	      	tabItem.setControl(gui.getCmpRoot());
 	      	
 	    }
 

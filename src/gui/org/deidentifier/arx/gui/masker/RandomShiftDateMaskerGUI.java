@@ -7,7 +7,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class RandomShiftDateMaskerGUI extends MaskerGUI{
+public class RandomShiftDateMaskerGUI implements ConfigurationComponent{
 
 	private Label lbl;
 	
@@ -22,6 +22,8 @@ public class RandomShiftDateMaskerGUI extends MaskerGUI{
 	private Spinner spnShiftConstantInput;
 	
 	private DateTime dtTimePeriod;
+
+	private Composite cmpRoot;
 	
 	public RandomShiftDateMaskerGUI(Composite root) {
 		
@@ -37,8 +39,8 @@ public class RandomShiftDateMaskerGUI extends MaskerGUI{
  		gridData.horizontalAlignment = GridData.FILL;
  		gridData.grabExcessHorizontalSpace = true;
  	    gridData.horizontalSpan = 8;
- 		this.distribution.cmpRoot.setLayoutData(gridData);
- 		this.distribution.cmpRoot.layout(true);
+ 		this.distribution.getCmpRoot().setLayoutData(gridData);
+ 		this.distribution.getCmpRoot().layout(true);
 		
 		// basePeriod
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
@@ -111,5 +113,21 @@ public class RandomShiftDateMaskerGUI extends MaskerGUI{
 			}
 		});
  		
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }

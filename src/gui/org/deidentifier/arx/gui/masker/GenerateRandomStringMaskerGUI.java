@@ -4,7 +4,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class GenerateRandomStringMaskerGUI extends MaskerGUI {
+public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
 	
 	private Label lbl;
 	
@@ -26,6 +26,8 @@ public class GenerateRandomStringMaskerGUI extends MaskerGUI {
 	private Text txtCharSet2;
 	
 	private Spinner spnLength;
+
+	private Composite cmpRoot;
 	
 	public GenerateRandomStringMaskerGUI(Composite root) {
 		
@@ -190,5 +192,21 @@ public class GenerateRandomStringMaskerGUI extends MaskerGUI {
  			}
  		});
       	
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }

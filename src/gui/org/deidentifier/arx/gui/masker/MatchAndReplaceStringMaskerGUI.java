@@ -6,7 +6,7 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.deidentifier.arx.masking.MatchAndReplaceStringMasker;
 
-public class MatchAndReplaceStringMaskerGUI extends MaskerGUI {
+public class MatchAndReplaceStringMaskerGUI implements ConfigurationComponent {
 
 	private Label lbl;
 	
@@ -15,6 +15,8 @@ public class MatchAndReplaceStringMaskerGUI extends MaskerGUI {
 	
 	private Button btnMatches;
 	private Button btnChars;
+
+	private Composite cmpRoot;
 	
 	public MatchAndReplaceStringMaskerGUI(Composite root) {
 		
@@ -43,6 +45,22 @@ public class MatchAndReplaceStringMaskerGUI extends MaskerGUI {
 		this.btnChars = new Button(this.cmpRoot, SWT.CHECK);
 		this.btnChars.setText("replace each character");
 		
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }
 

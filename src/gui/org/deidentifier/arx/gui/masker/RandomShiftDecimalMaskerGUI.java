@@ -7,7 +7,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class RandomShiftDecimalMaskerGUI extends MaskerGUI{
+public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 	
 	private Label lbl;
 	
@@ -16,6 +16,8 @@ public class RandomShiftDecimalMaskerGUI extends MaskerGUI{
 	private Spinner spnShiftConstanatInput;
 	
 	private RealDistribution distribution;
+
+	private Composite cmpRoot;
 	
 	public RandomShiftDecimalMaskerGUI(Composite root) {
 		
@@ -31,8 +33,8 @@ public class RandomShiftDecimalMaskerGUI extends MaskerGUI{
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 	    gridData.horizontalSpan = 8;
-	    this.distribution.cmpRoot.setLayoutData(gridData);
-	    this.distribution.cmpRoot.layout(true);
+	    this.distribution.getCmpRoot().setLayoutData(gridData);
+	    this.distribution.getCmpRoot().layout(true);
 		
 		// shift constant
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
@@ -53,6 +55,22 @@ public class RandomShiftDecimalMaskerGUI extends MaskerGUI{
 				}
 			}
 		});
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }
 

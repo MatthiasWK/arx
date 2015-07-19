@@ -4,7 +4,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class GenerateRandomIntegerDecimalMaskerGUI extends MaskerGUI {
+public class GenerateRandomIntegerDecimalMaskerGUI implements ConfigurationComponent {
 	
 	private Label lbl;
 	
@@ -13,6 +13,8 @@ public class GenerateRandomIntegerDecimalMaskerGUI extends MaskerGUI {
 	private Spinner spnShiftConstant;
 	
 	private IntegerDistribution distribution;
+
+	private Composite cmpRoot;
 	
 	
 	public GenerateRandomIntegerDecimalMaskerGUI(Composite root) {
@@ -29,8 +31,8 @@ public class GenerateRandomIntegerDecimalMaskerGUI extends MaskerGUI {
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 	    gridData.horizontalSpan = 8;
-	    this.distribution.cmpRoot.setLayoutData(gridData);
-	    this.distribution.cmpRoot.layout(true);
+	    this.distribution.getCmpRoot().setLayoutData(gridData);
+	    this.distribution.getCmpRoot().layout(true);
       	
 		// shiftConstant
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
@@ -58,5 +60,21 @@ public class GenerateRandomIntegerDecimalMaskerGUI extends MaskerGUI {
 			}
 		});
 		
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }

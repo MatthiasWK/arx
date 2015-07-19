@@ -12,10 +12,10 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 
-public class RealDistribution {
+public class RealDistribution implements ConfigurationComponent {
 	static int comboHorizontalSpan = 8;
 	
-	public Composite cmpRoot;
+	private Composite cmpRoot;
 	
 	private Combo cmbDropdown;
 	private Composite cmpParam;
@@ -689,5 +689,19 @@ public class RealDistribution {
 		});
 	}
 	
-	
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
+	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

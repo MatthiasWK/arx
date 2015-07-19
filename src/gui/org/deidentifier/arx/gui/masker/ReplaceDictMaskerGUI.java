@@ -4,7 +4,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class ReplaceDictMaskerGUI extends MaskerGUI {
+public class ReplaceDictMaskerGUI implements ConfigurationComponent {
 	static String replacementValueDouble = "";
 	static String replacementValueDate = "";
 	static String replacementValueString = "";
@@ -14,6 +14,7 @@ public class ReplaceDictMaskerGUI extends MaskerGUI {
 	private Combo cmbDropdown;
 	
 	private Text txtDictionary;
+	private Composite cmpRoot;
 	
 	public ReplaceDictMaskerGUI(Composite root) {
 		
@@ -44,5 +45,21 @@ public class ReplaceDictMaskerGUI extends MaskerGUI {
 		gridData.widthHint = 100;
 		this.txtDictionary.setLayoutData(gridData);
       	
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }

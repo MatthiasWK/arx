@@ -15,11 +15,11 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 
-public class IntegerDistribution {
+public class IntegerDistribution implements ConfigurationComponent{
 
 	static int comboHorizontalSpan = 8;
 	
-	public Composite cmpRoot;
+	private Composite cmpRoot;
 	private Combo cmbDropdown;
 	private Composite cmpParam;
 	
@@ -297,5 +297,20 @@ public class IntegerDistribution {
 		display.dispose ();
 	}
 	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
+	}
 	
 }

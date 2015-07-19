@@ -4,7 +4,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class ReplaceInstMaskerGUI extends MaskerGUI {
+public class ReplaceInstMaskerGUI implements ConfigurationComponent {
 	static String replacementValueDouble = "";
 	static String replacementValueDate = "";
 	static String replacementValueString = "";
@@ -18,6 +18,8 @@ public class ReplaceInstMaskerGUI extends MaskerGUI {
 	private Spinner spnReplacementValue;
 	private DateTime dtReplacementValue2;
 	private Text txtReplacementValue3;
+	
+	private Composite cmpRoot;
 	
 	public ReplaceInstMaskerGUI(Composite root) {
 		
@@ -108,5 +110,21 @@ public class ReplaceInstMaskerGUI extends MaskerGUI {
 			}
 	    });
       	
+	}
+	
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Composite getCmpRoot() {
+		return cmpRoot;
+	}
+
+	@Override
+	public void setCmpRoot(Composite cmpRoot) {
+		this.cmpRoot = cmpRoot;		
 	}
 }
