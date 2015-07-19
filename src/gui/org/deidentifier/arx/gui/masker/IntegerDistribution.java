@@ -32,6 +32,8 @@ public class IntegerDistribution {
 	private Text txtSingletons;
 	private Text txtProbabilities;
 	
+	private Button btn1;
+	
 	public IntegerDistribution(Composite root){
 		this.cmpRoot = new Composite(root, SWT.NONE);
 		this.cmpRoot.setLayout(new GridLayout (comboHorizontalSpan, false));
@@ -125,6 +127,144 @@ public class IntegerDistribution {
 								spn1.setMaximum(100000);
 								lbl = new Label(cmpParam, SWT.NULL);
 								lbl.setText("probability of success");
+								
+								cmpParam.layout();
+								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								cmpRoot.layout();
+								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								break;
+							case 4: // Hypergeometric Distribution
+								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int populationSize, int numberOfSuccesses, int sampleSize");
+								cmpParam.setLayout(new GridLayout (2, false));
+								
+								spn1 = new Spinner(cmpParam, SWT.BORDER);
+								spn1.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("population size");
+								
+								spn2 = new Spinner(cmpParam, SWT.BORDER);
+								spn2.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("number of successes");
+								
+								spn3 = new Spinner(cmpParam, SWT.BORDER);
+								spn3.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("sample size");
+								
+								cmpParam.layout();
+								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								cmpRoot.layout();
+								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								break;
+							case 5: // Pascal Distribution
+								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int r, double p");
+								cmpParam.setLayout(new GridLayout (2, false));
+								
+								spn1 = new Spinner(cmpParam, SWT.BORDER);
+								spn1.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("number of successes");
+								
+								spn2 = new Spinner(cmpParam, SWT.BORDER);
+								spn2.setDigits(2);
+								spn2.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("probability of success");
+								
+								cmpParam.layout();
+								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								cmpRoot.layout();
+								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								break;
+							case 6: // Poisson Distribution
+								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double p [, double epsilon] [, int maxIterations]");
+								cmpParam.setLayout(new GridLayout (3, false));
+								
+								spn1 = new Spinner(cmpParam, SWT.BORDER);
+								spn1.setDigits(2);
+								spn1.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("specified mean");
+								gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+							    gridData.horizontalSpan = 2;
+							    lbl.setLayoutData(gridData);
+							    
+							    final Button checkEpsilon = new Button(cmpParam, SWT.CHECK);
+							    
+							    spn2 = new Spinner(cmpParam, SWT.BORDER);
+							    spn2.setDigits(2);
+							    spn2.setEnabled(false);
+							    spn2.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("convergence criterion");
+								
+								checkEpsilon.addSelectionListener(new SelectionAdapter() {
+									public void widgetSelected(SelectionEvent event) {
+										if (checkEpsilon.getSelection()) {
+											spn2.setEnabled(true);
+										} else {
+											spn2.setEnabled(false);
+										}
+									}
+								});
+								
+								btn1 = new Button(cmpParam, SWT.CHECK);
+							    
+							    spn3 = new Spinner(cmpParam, SWT.BORDER);
+							    spn3.setEnabled(false);
+							    spn3.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("maximum number of iterations");
+								
+								btn1.addSelectionListener(new SelectionAdapter() {
+									public void widgetSelected(SelectionEvent event) {
+										if (btn1.getSelection()) {
+											spn3.setEnabled(true);
+										} else {
+											spn3.setEnabled(false);
+										}
+									}
+								});
+								
+								cmpParam.layout();
+								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								cmpRoot.layout();
+								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								break;
+							case 7: // Uniform Integer Distribution
+								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int lower, int upper");
+								cmpParam.setLayout(new GridLayout (2, false));
+								
+								spn1 = new Spinner(cmpParam, SWT.BORDER);
+								spn1.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("Lower bound (inclusive) of this distribution");
+								
+								spn2= new Spinner(cmpParam, SWT.BORDER);
+								spn2.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("Upper bound (inclusive) of this distribution");
+								
+								cmpParam.layout();
+								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								cmpRoot.layout();
+								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+								break;
+							case 8: // Zipf Distribution
+								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int numberOfElements, double exponent");
+								cmpParam.setLayout(new GridLayout (2, false));
+								
+								spn1 = new Spinner(cmpParam, SWT.BORDER);
+								spn1.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("number of elements");
+								
+								spn2 = new Spinner(cmpParam, SWT.BORDER);
+								spn2.setDigits(2);
+								spn2.setMaximum(100000);
+								lbl = new Label(cmpParam, SWT.NULL);
+								lbl.setText("exponent");
 								
 								cmpParam.layout();
 								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));

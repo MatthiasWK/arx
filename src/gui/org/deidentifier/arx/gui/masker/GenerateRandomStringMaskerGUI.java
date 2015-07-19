@@ -4,368 +4,191 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-public class GenerateRandomStringMaskerGUI implements MaskerGUI {
-	public static void main (String [] args) {
-		Display display = new Display();
-		Shell shell = new Shell (display);
-        RowLayout layout = new RowLayout();
-        layout.type = SWT.VERTICAL;
-		shell.setLayout(layout);
-
-		Composite c1 = new Composite(shell, SWT.BORDER);	
-		c1.setLayout (new GridLayout (3, false));
+public class GenerateRandomStringMaskerGUI extends MaskerGUI {
+	
+	private Label lbl;
+	
+	private Button btn1;
+	private Button btn2;
+	private Button btn3;
+	private Button btn4;
+	private Button btnCheckLettersNumbers;
+	private Button btnCheckCharSet;
+	private Button btnLetters;
+	private Button btnNumbers;
+	private Button btnLetters2;
+	private Button btnNumbers2;
+	
+	private Composite cmp2;
+	private Composite cmp3;
+	
+	private Text txtCharSet;
+	private Text txtCharSet2;
+	
+	private Spinner spnLength;
+	
+	public GenerateRandomStringMaskerGUI(Composite root) {
 		
-		// no parameter
-		final Button b1 = new Button(c1, SWT.RADIO);
-		Label label = new Label(c1, SWT.NONE);
-		label.setText("No parameters (Creates a masker generating strings with the same length as the input, using only alphabetic characters.)");
-
-		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 2;
-	    label.setLayoutData(gridData);
-		
-	    // boolean letters, boolean numbers
-		final Button b2 = new Button(c1, SWT.RADIO);
-		b2.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		label = new Label(c1, SWT.NONE);
-		label.setText("Alphabetic and/or numeric characters:");
-		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		
-		Composite c2 = new Composite(c1, SWT.NONE);
-		c2.setLayout(new GridLayout(2, false));
-		
-		final Button letters = new Button(c2, SWT.CHECK);
-		letters.setEnabled(false);
-		label = new Label(c2, SWT.NONE);
-		label.setText("alphabetic characters");
-		
-		final Button numbers = new Button(c2, SWT.CHECK);
-		numbers.setEnabled(false);
-		label = new Label(c2, SWT.NONE);
-		label.setText("numeric characters");
-		
-		b2.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				if (b2.getSelection()) {
-					letters.setEnabled(true);
-					numbers.setEnabled(true);
-				} else {
-					letters.setEnabled(false);
-					numbers.setEnabled(false);
-				}
-			}
-		});
-		
-		// char[] charSet
-		final Button b3 = new Button(c1, SWT.RADIO);
-		b3.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		label = new Label(c1, SWT.NONE);
-		label.setText("Character set:");
-		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-
-		final Text charSet = new Text(c1, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		charSet.setEnabled(false);
-		gridData = new GridData(SWT.FILL, 0, false, false);
-		gridData.heightHint = 50;
-		charSet.setLayoutData(gridData);
-		
-		b3.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				if (b3.getSelection()) {
-					charSet.setEnabled(true);
-				} else {
-					charSet.setEnabled(false);
-				}
-			}
-		});
-		
-		// length + other parameters
-		final Button b4 = new Button(c1, SWT.RADIO);
-		b4.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		label = new Label(c1, SWT.NONE);
-		label.setText("Length + other parameters:");
-		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		
-		Composite c3 = new Composite(c1, SWT.NONE);
-		c3.setLayout(new GridLayout(4, false));
-		
-		final Spinner length = new Spinner(c3, SWT.WRAP);
-		length.setEnabled(false);
-		length.setMaximum(100000);
-		
-		label = new Label(c3, SWT.NONE);
-		label.setText("(int length)");
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 3;
-	    label.setLayoutData(gridData);
-		
-		final Button checkCharSet = new Button(c3, SWT.CHECK);
-		checkCharSet.setLayoutData(new GridData(SWT.RIGHT, SWT.BEGINNING, false, false));
-		checkCharSet.setEnabled(false);
-		
-		label = new Label(c3, SWT.NONE);
-		label.setText("Character set:");
-		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		
-		final Text charSet2 = new Text(c3, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		charSet2.setEnabled(false);
-		gridData = new GridData(SWT.FILL, 0, false, false);
-		gridData.heightHint = 50;
-	    gridData.horizontalSpan = 2;
-		charSet2.setLayoutData(gridData);
-		
-		final Button checkLettersNumbers = new Button(c3, SWT.CHECK);
-		checkLettersNumbers.setLayoutData(new GridData(SWT.RIGHT, SWT.BEGINNING, false, false));
-		checkLettersNumbers.setEnabled(false);
-		
-		label = new Label(c3, SWT.NONE);
-		label.setText("Alphabetic/numeric characters:");
-		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
-		
-		final Button letters2 = new Button(c3, SWT.CHECK);
-		letters2.setEnabled(false);
-		label = new Label(c3, SWT.NONE);
-		label.setText("alphabetic characters");
-
-		label = new Label(c3, SWT.NONE);
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 2;
-	    label.setLayoutData(gridData);
-	    
-		final Button numbers2 = new Button(c3, SWT.CHECK);
-		numbers2.setEnabled(false);
-		label = new Label(c3, SWT.NONE);
-		label.setText("numeric characters");
-		
-		b4.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				if (b4.getSelection()) {
-					length.setEnabled(true);
-					checkCharSet.setEnabled(true);
-					checkLettersNumbers.setEnabled(true);
-				} else {
-					length.setEnabled(false);
-					checkCharSet.setEnabled(false);
-					checkLettersNumbers.setEnabled(false);
-				}
-			}
-		});
-		
-		checkCharSet.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				if (checkCharSet.getSelection()) {
-					charSet2.setEnabled(true);
-				} else {
-					charSet2.setEnabled(false);
-				}
-			}
-		});
-		
-		checkLettersNumbers.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				if (checkLettersNumbers.getSelection()) {
-					letters2.setEnabled(true);
-					numbers2.setEnabled(true);
-				} else {
-					letters2.setEnabled(false);
-					numbers2.setEnabled(false);
-				}
-			}
-		});
-		
-		// GUI control
-		Composite c4 = new Composite(shell, SWT.NONE);
-		c4.setLayout(new GridLayout (1, false));
-		Button next = new Button(c4, SWT.PUSH);
-		next.setText("next >");
-		next.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				if (b1.getSelection()) {
-					System.out.println("no parameters");
-				} else if (b2.getSelection()) {
-					System.out.println("boolean letters, boolean numbers");
-				} else if (b3.getSelection()) {
-					System.out.println("char[] charSet");
-				} else if (b4.getSelection()) {
-					System.out.println("int length [, char[] charSet] [, boolean letters, boolean numbers]");
-				}
-			}
-		});
-
-		shell.pack ();
-		shell.open ();
-
-		while (!shell.isDisposed ()) {
-			if (!display.readAndDispatch ())
-				display.sleep ();
-		}
-		display.dispose ();
-	}
-
-	public Composite loadMasker() {
-		Shell shell = new Shell ();
-		
-		final Composite mainComposite = new Composite(shell, SWT.NONE);
-      	mainComposite.setLayout(new GridLayout (3, false));
+		this.cmpRoot = new Composite(root, SWT.NONE);
+      	this.cmpRoot.setLayout(new GridLayout (3, false));
       	
       	// no parameter
- 		final Button b1 = new Button(mainComposite, SWT.RADIO);
- 		Label label = new Label(mainComposite, SWT.NONE);
- 		label.setText("No parameters (Creates a masker generating strings with the same length as the input, using only alphabetic characters.)");
+ 		this.btn1 = new Button(this.cmpRoot, SWT.RADIO);
+ 		this.lbl = new Label(this.cmpRoot, SWT.NONE);
+ 		this.lbl.setText("No parameters (Creates a masker generating strings with the same length as the input, using only alphabetic characters.)");
 
  		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
  	    gridData.horizontalSpan = 2;
- 	    label.setLayoutData(gridData);
+ 	    this.lbl.setLayoutData(gridData);
  		
  	    // boolean letters, boolean numbers
- 		final Button b2 = new Button(mainComposite, SWT.RADIO);
- 		b2.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
- 		label = new Label(mainComposite, SWT.NONE);
- 		label.setText("Alphabetic and/or numeric characters:");
- 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.btn2 = new Button(this.cmpRoot, SWT.RADIO);
+ 		this.btn2.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.lbl = new Label(this.cmpRoot, SWT.NONE);
+ 		this.lbl.setText("Alphabetic and/or numeric characters:");
+ 		this.lbl.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
  		
- 		Composite c2 = new Composite(mainComposite, SWT.NONE);
- 		c2.setLayout(new GridLayout(2, false));
+ 		this.cmp2 = new Composite(this.cmpRoot, SWT.NONE);
+ 		this.cmp2.setLayout(new GridLayout(2, false));
  		
- 		final Button letters = new Button(c2, SWT.CHECK);
- 		letters.setEnabled(false);
- 		label = new Label(c2, SWT.NONE);
- 		label.setText("alphabetic characters");
+ 		this.btnLetters = new Button(this.cmp2, SWT.CHECK);
+ 		this.btnLetters.setEnabled(false);
+ 		this.lbl = new Label(this.cmp2, SWT.NONE);
+ 		this.lbl.setText("alphabetic characters");
  		
- 		final Button numbers = new Button(c2, SWT.CHECK);
- 		numbers.setEnabled(false);
- 		label = new Label(c2, SWT.NONE);
- 		label.setText("numeric characters");
+ 		this.btnNumbers = new Button(this.cmp2, SWT.CHECK);
+ 		this.btnNumbers.setEnabled(false);
+ 		this.lbl = new Label(this.cmp2, SWT.NONE);
+ 		this.lbl.setText("numeric characters");
  		
- 		b2.addSelectionListener(new SelectionAdapter() {
+ 		this.btn2.addSelectionListener(new SelectionAdapter() {
  			public void widgetSelected(SelectionEvent event) {
- 				if (b2.getSelection()) {
- 					letters.setEnabled(true);
- 					numbers.setEnabled(true);
+ 				if (btn2.getSelection()) {
+ 					btnLetters.setEnabled(true);
+ 					btnNumbers.setEnabled(true);
  				} else {
- 					letters.setEnabled(false);
- 					numbers.setEnabled(false);
+ 					btnLetters.setEnabled(false);
+ 					btnNumbers.setEnabled(false);
  				}
  			}
  		});
  		
  		// char[] charSet
- 		final Button b3 = new Button(mainComposite, SWT.RADIO);
- 		b3.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
- 		label = new Label(mainComposite, SWT.NONE);
- 		label.setText("Character set:");
- 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.btn3 = new Button(this.cmpRoot, SWT.RADIO);
+ 		this.btn3.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.lbl = new Label(this.cmpRoot, SWT.NONE);
+ 		this.lbl.setText("Character set:");
+ 		this.lbl.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
 
- 		final Text charSet = new Text(mainComposite, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
- 		charSet.setEnabled(false);
+ 		this.txtCharSet = new Text(this.cmpRoot, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+ 		this.txtCharSet.setEnabled(false);
  		gridData = new GridData(SWT.FILL, 0, false, false);
  		gridData.heightHint = 50;
- 		charSet.setLayoutData(gridData);
+ 		this.txtCharSet.setLayoutData(gridData);
  		
- 		b3.addSelectionListener(new SelectionAdapter() {
+ 		this.btn3.addSelectionListener(new SelectionAdapter() {
  			public void widgetSelected(SelectionEvent event) {
- 				if (b3.getSelection()) {
- 					charSet.setEnabled(true);
+ 				if (btn3.getSelection()) {
+ 					txtCharSet.setEnabled(true);
  				} else {
- 					charSet.setEnabled(false);
+ 					txtCharSet.setEnabled(false);
  				}
  			}
  		});
  		
  		// length + other parameters
- 		final Button b4 = new Button(mainComposite, SWT.RADIO);
- 		b4.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
- 		label = new Label(mainComposite, SWT.NONE);
- 		label.setText("Length + other parameters:");
- 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.btn4 = new Button(this.cmpRoot, SWT.RADIO);
+ 		this.btn4.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.lbl = new Label(this.cmpRoot, SWT.NONE);
+ 		this.lbl.setText("Length + other parameters:");
+ 		this.lbl.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
  		
- 		Composite c3 = new Composite(mainComposite, SWT.NONE);
- 		c3.setLayout(new GridLayout(4, false));
+ 		this.cmp3 = new Composite(this.cmpRoot, SWT.NONE);
+ 		this.cmp3.setLayout(new GridLayout(4, false));
  		
- 		final Spinner length = new Spinner(c3, SWT.WRAP);
- 		length.setEnabled(false);
- 		length.setMaximum(100000);
+ 		this.spnLength = new Spinner(this.cmp3, SWT.WRAP);
+ 		this.spnLength.setEnabled(false);
+ 		this.spnLength.setMaximum(100000);
  		
- 		label = new Label(c3, SWT.NONE);
- 		label.setText("(int length)");
+ 		this.lbl = new Label(this.cmp3, SWT.NONE);
+ 		this.lbl.setText("(int length)");
  		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
  	    gridData.horizontalSpan = 3;
- 	    label.setLayoutData(gridData);
+ 	    this.lbl.setLayoutData(gridData);
  		
- 		final Button checkCharSet = new Button(c3, SWT.CHECK);
- 		checkCharSet.setLayoutData(new GridData(SWT.RIGHT, SWT.BEGINNING, false, false));
- 		checkCharSet.setEnabled(false);
+ 		this.btnCheckCharSet = new Button(this.cmp3, SWT.CHECK);
+ 		this.btnCheckCharSet.setLayoutData(new GridData(SWT.RIGHT, SWT.BEGINNING, false, false));
+ 		this.btnCheckCharSet.setEnabled(false);
  		
- 		label = new Label(c3, SWT.NONE);
- 		label.setText("Character set:");
- 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.lbl = new Label(this.cmp3, SWT.NONE);
+ 		this.lbl.setText("Character set:");
+ 		this.lbl.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
  		
- 		final Text charSet2 = new Text(c3, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
- 		charSet2.setEnabled(false);
+ 		this.txtCharSet2 = new Text(this.cmp3, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+ 		this.txtCharSet2.setEnabled(false);
  		gridData = new GridData(SWT.FILL, 0, false, false);
  		gridData.heightHint = 50;
  	    gridData.horizontalSpan = 2;
- 		charSet2.setLayoutData(gridData);
+ 	    this.txtCharSet2.setLayoutData(gridData);
  		
- 		final Button checkLettersNumbers = new Button(c3, SWT.CHECK);
- 		checkLettersNumbers.setLayoutData(new GridData(SWT.RIGHT, SWT.BEGINNING, false, false));
- 		checkLettersNumbers.setEnabled(false);
+ 		this.btnCheckLettersNumbers = new Button(this.cmp3, SWT.CHECK);
+ 		this.btnCheckLettersNumbers.setLayoutData(new GridData(SWT.RIGHT, SWT.BEGINNING, false, false));
+ 		this.btnCheckLettersNumbers.setEnabled(false);
  		
- 		label = new Label(c3, SWT.NONE);
- 		label.setText("Alphabetic/numeric characters:");
- 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+ 		this.lbl = new Label(this.cmp3, SWT.NONE);
+ 		this.lbl.setText("Alphabetic/numeric characters:");
+ 		this.lbl.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
  		
- 		final Button letters2 = new Button(c3, SWT.CHECK);
- 		letters2.setEnabled(false);
- 		label = new Label(c3, SWT.NONE);
- 		label.setText("alphabetic characters");
+ 		this.btnLetters2 = new Button(this.cmp3, SWT.CHECK);
+ 		this.btnLetters2.setEnabled(false);
+ 		this.lbl = new Label(this.cmp3, SWT.NONE);
+ 		this.lbl.setText("alphabetic characters");
 
- 		label = new Label(c3, SWT.NONE);
+ 		this.lbl = new Label(this.cmp3, SWT.NONE);
  		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
  	    gridData.horizontalSpan = 2;
- 	    label.setLayoutData(gridData);
+ 	    this.lbl.setLayoutData(gridData);
  	    
- 		final Button numbers2 = new Button(c3, SWT.CHECK);
- 		numbers2.setEnabled(false);
- 		label = new Label(c3, SWT.NONE);
- 		label.setText("numeric characters");
+ 	    this.btnNumbers2 = new Button(this.cmp3, SWT.CHECK);
+ 	    this.btnNumbers2.setEnabled(false);
+ 		this.lbl = new Label(this.cmp3, SWT.NONE);
+ 		this.lbl.setText("numeric characters");
  		
- 		b4.addSelectionListener(new SelectionAdapter() {
+ 		this.btn4.addSelectionListener(new SelectionAdapter() {
  			public void widgetSelected(SelectionEvent event) {
- 				if (b4.getSelection()) {
- 					length.setEnabled(true);
- 					checkCharSet.setEnabled(true);
- 					checkLettersNumbers.setEnabled(true);
+ 				if (btn4.getSelection()) {
+ 					spnLength.setEnabled(true);
+ 					btnCheckCharSet.setEnabled(true);
+ 					btnCheckLettersNumbers.setEnabled(true);
  				} else {
- 					length.setEnabled(false);
- 					checkCharSet.setEnabled(false);
- 					checkLettersNumbers.setEnabled(false);
+ 					spnLength.setEnabled(false);
+ 					btnCheckCharSet.setEnabled(false);
+ 					btnCheckLettersNumbers.setEnabled(false);
  				}
  			}
  		});
  		
- 		checkCharSet.addSelectionListener(new SelectionAdapter() {
+ 		this.btnCheckCharSet.addSelectionListener(new SelectionAdapter() {
  			public void widgetSelected(SelectionEvent event) {
- 				if (checkCharSet.getSelection()) {
- 					charSet2.setEnabled(true);
+ 				if (btnCheckCharSet.getSelection()) {
+ 					txtCharSet2.setEnabled(true);
  				} else {
- 					charSet2.setEnabled(false);
+ 					txtCharSet2.setEnabled(false);
  				}
  			}
  		});
  		
- 		checkLettersNumbers.addSelectionListener(new SelectionAdapter() {
+ 		this.btnCheckLettersNumbers.addSelectionListener(new SelectionAdapter() {
  			public void widgetSelected(SelectionEvent event) {
- 				if (checkLettersNumbers.getSelection()) {
- 					letters2.setEnabled(true);
- 					numbers2.setEnabled(true);
+ 				if (btnCheckLettersNumbers.getSelection()) {
+ 					btnLetters2.setEnabled(true);
+ 					btnNumbers2.setEnabled(true);
  				} else {
- 					letters2.setEnabled(false);
- 					numbers2.setEnabled(false);
+ 					btnLetters2.setEnabled(false);
+ 					btnNumbers2.setEnabled(false);
  				}
  			}
  		});
       	
-      	return mainComposite;
 	}
 }

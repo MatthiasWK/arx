@@ -32,52 +32,52 @@ public class MaskerTool {
 	    	TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
 	      	tabItem.setText(maskerTypes[loopIndex]);
 	      
-	      	MaskerGUI gui = null;
+	      	MaskerGUI gui = new MaskerGUI();
 	      	switch (loopIndex) {
 	      		case 0:
-	      			gui = new GenerateRandomDateMaskerGUI();
+	      			gui = new GenerateRandomDateMaskerGUI(tabFolder);
 	      			break;
 	      		case 1:
-	      			gui = new GenerateRandomDecimalMaskerGUI();
+	      			gui = new GenerateRandomDecimalMaskerGUI(tabFolder);
 	      			break;
 	      		case 2:
-	      			gui = new GenerateRandomIntegerDecimalMaskerGUI();
+	      			gui = new GenerateRandomIntegerDecimalMaskerGUI(tabFolder);
 	      			break;
 	      		case 3:
-	      			gui = new GenerateRandomStringMaskerGUI();
+	      			gui = new GenerateRandomStringMaskerGUI(tabFolder);
 	      			break;
 	      		case 4:
-	      			gui = new ReplaceDictMaskerGUI();
+	      			gui = new ReplaceDictMaskerGUI(tabFolder);
 	      			break;
 	      		case 5:
-	      			gui = new ReplaceInstMaskerGUI();
+	      			gui = new ReplaceInstMaskerGUI(tabFolder);
 	      			break;
 	      		case 6:
-	      			gui = new ConstantShiftDateMaskerGUI();
+	      			gui = new ConstantShiftDateMaskerGUI(tabFolder);
 	      			break;
 	      		case 7:
-	      			gui = new ConstantShiftDecimalMaskerGUI();
+	      			gui = new ConstantShiftDecimalMaskerGUI(tabFolder);
 	      			break;
 	      		case 8:
-	      			gui = new MatchAndReplaceStringMaskerGUI();
+	      			gui = new MatchAndReplaceStringMaskerGUI(tabFolder);
 	      			break;
 	      		case 9:
-	      			gui = new RandomShiftDateMaskerGUI();
+	      			gui = new RandomShiftDateMaskerGUI(tabFolder);
 	      			break;
 	      	    case 10:
-	      			gui = new RandomShiftDecimalMaskerGUI();
+	      			gui = new RandomShiftDecimalMaskerGUI(tabFolder);
 	      			break;
 	      		case 11:
-	      			gui = new ShuffleMaskerGUI();
+	      			gui = new ShuffleMaskerGUI(tabFolder);
 	      			break;
 	      		case 12:
-	      			gui = new SplitAndReplaceStringMaskerGUI();
+	      			gui = new SplitAndReplaceStringMaskerGUI(tabFolder);
 	      			break;
 	      			
 	      	}
-	      	Composite c = gui.loadMasker();
-	      	c.setParent(tabFolder);
-	      	tabItem.setControl(c);
+	      	
+	      	tabItem.setControl(gui.cmpRoot);
+	      	
 	    }
 
 	    tabFolder.addSelectionListener(new SelectionAdapter() {
