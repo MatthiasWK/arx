@@ -95,7 +95,7 @@ public class MaskerTool {
 	    }
 	    display.dispose();
 	}
-	
+	/*
 	public static Composite loadIntegerDistributions(int comboHorizontalSpan) {
 		Shell shell = new Shell ();
 		
@@ -1005,4 +1005,5 @@ public class MaskerTool {
 	    mainComposite.layout(true, true);
 		return mainComposite;
 	}
+	*/
 }

@@ -23,15 +23,14 @@ public class GenerateRandomDecimalMaskerGUI extends MaskerGUI {
       	// Real distribution
  		this.lbl = new Label(this.cmpRoot, SWT.NULL);
  		this.lbl.setText("Real distribution: ");
- 		Composite distributions = MaskerTool.loadRealDistributions(8);
- 		distributions.setParent(this.cmpRoot);
+ 		this.distribution = new RealDistribution(this.cmpRoot);
  		
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 	    gridData.horizontalSpan = 8;
-		distributions.setLayoutData(gridData);
-		distributions.layout(true);
+		this.distribution.cmpRoot.setLayoutData(gridData);
+		this.distribution.cmpRoot.layout(true);
 		
  		// shift constant
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
