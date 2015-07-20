@@ -21,17 +21,14 @@ public class ConstantShiftDecimalMaskerGUI implements ConfigurationComponent{
 		this.spnInput.setDigits(2);
 		}
 
-	@Override
 	public Composite getCmpRoot() {
 		return cmpRoot;
 	}
 
-	@Override
 	public void setCmpRoot(Composite cmpRoot) {
 		this.cmpRoot = cmpRoot;		
 	}
 
-	@Override
 	public boolean isValid() {
 		// TODO Auto-generated method stub
 		return false;
