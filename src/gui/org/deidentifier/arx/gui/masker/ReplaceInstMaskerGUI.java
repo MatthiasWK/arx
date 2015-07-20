@@ -1,12 +1,13 @@
+import java.sql.Date;
 import org.eclipse.swt.*;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.deidentifier.arx.gui.view.SWTUtil;
 
 public class ReplaceInstMaskerGUI implements ConfigurationComponent {
-	static String replacementValueDouble = "";
-	static String replacementValueDate = "";
+	static Double replacementValueDouble = null;
+	static Date replacementValueDate = null;
 	static String replacementValueString = "";
 	
 	private Label lbl;
@@ -21,18 +22,19 @@ public class ReplaceInstMaskerGUI implements ConfigurationComponent {
 	
 	private Composite cmpRoot;
 	
+	private boolean doubleValueValid = false;
+	private boolean dateValueValid = false;
+	private boolean stringValueValid = false;
+	
 	public ReplaceInstMaskerGUI(Composite root) {
 		
 		this.cmpRoot = new Composite(root, SWT.NONE);
-      	this.cmpRoot.setLayout(new GridLayout (3, false));
+      	this.cmpRoot.setLayout(SWTUtil.createGridLayout(2));
       	
       	this.lbl = new Label(this.cmpRoot, SWT.NULL);
 		this.lbl.setText("Replacement value: ");
 		
 		this.cmbDropdown = new Combo(this.cmpRoot, SWT.DROP_DOWN);
-		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 2;
-	    this.cmbDropdown.setLayoutData(gridData);
 	    this.cmbDropdown.setText("Choose data type...");
 		String[] dataType = {	"Double",
 								"Date",
@@ -45,9 +47,7 @@ public class ReplaceInstMaskerGUI implements ConfigurationComponent {
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
 		
 		this.cmp2 = new Composite(this.cmpRoot, SWT.NONE);
-		gridData = new GridData();
-	    gridData.horizontalSpan = 2;
-	    this.cmp2.setLayoutData(gridData);
+	    this.cmp2.setLayoutData(SWTUtil.createFillGridData());
 	    
 	    this.cmbDropdown.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
@@ -64,14 +64,15 @@ public class ReplaceInstMaskerGUI implements ConfigurationComponent {
 						spnReplacementValue.setMaximum(100000);
 						spnReplacementValue.addSelectionListener(new SelectionAdapter() {
 							public void widgetSelected(SelectionEvent e) {
-								replacementValueDouble = spnReplacementValue.getText();
+								try {
+									replacementValueDouble = Double.parseDouble(spnReplacementValue.getText());
+						            doubleValueValid = true;
+						        } catch (NumberFormatException exc) {
+						        	doubleValueValid = false;
+						        }
 							}
 						});
 						
-						cmp2.layout();
-						cmp2.setSize(cmp2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 1: // Date
 						cmp2.setLayout(new RowLayout());
@@ -79,16 +80,17 @@ public class ReplaceInstMaskerGUI implements ConfigurationComponent {
 						dtReplacementValue2 = new DateTime(cmp2, SWT.CALENDAR);
 						dtReplacementValue2.addSelectionListener(new SelectionAdapter() {
 							public void widgetSelected(SelectionEvent e) {
-								replacementValueDate = dtReplacementValue2.getDay() + "." +
-														(dtReplacementValue2.getMonth()+1) + "." +
-														dtReplacementValue2.getYear();
+								try {
+									replacementValueDate = Date.valueOf(dtReplacementValue2.getYear() + "-" + 
+																		(dtReplacementValue2.getMonth()+1) + "-" +
+																		dtReplacementValue2.getDay());
+									dateValueValid = true;
+								} catch (IllegalArgumentException exc) {
+									dateValueValid = false;
+								}
 							}
 						});
 						
-						cmp2.layout();
-						cmp2.setSize(cmp2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 					case 2: // String
 						cmp2.setLayout(new RowLayout());
@@ -96,14 +98,15 @@ public class ReplaceInstMaskerGUI implements ConfigurationComponent {
 						txtReplacementValue3 = new Text(cmp2, SWT.BORDER);
 						txtReplacementValue3.addModifyListener(new ModifyListener() {
 							public void modifyText(ModifyEvent e) {
-								replacementValueString = txtReplacementValue3.getText();
+								if (txtReplacementValue3.getText() != "") {
+									replacementValueString = txtReplacementValue3.getText();
+									stringValueValid = true;
+								} else {
+									stringValueValid = false;
+								}
 							}
 						});
 						
-						cmp2.layout();
-						cmp2.setSize(cmp2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						break;
 				}
 				cmpRoot.layout(true, true);
@@ -113,8 +116,13 @@ public class ReplaceInstMaskerGUI implements ConfigurationComponent {
 	}
 	
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		int selectedIndex = cmbDropdown.getSelectionIndex();
+		switch (selectedIndex) {
+			case 0: return doubleValueValid;
+			case 1: return dateValueValid;
+			case 2: return stringValueValid;
+			default: return false;
+		}
 	}
 
 	public Composite getCmpRoot() {
