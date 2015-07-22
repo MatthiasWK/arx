@@ -48,17 +48,17 @@ public class RandomShiftDateMaskerGUI implements ConfigurationComponent{
 		
 		this.btnBasePeriod = new Button(this.cmpRoot, SWT.CHECK);
 		
-		this.spnDays = new Spinner(this.cmpRoot, SWT.WRAP);
+		this.spnDays = new Spinner(this.cmpRoot, SWT.BORDER);
 		this.spnDays.setEnabled(false);
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
 		this.lbl.setText("days");
 		
-		this.spnMonths = new Spinner(this.cmpRoot, SWT.WRAP);
+		this.spnMonths = new Spinner(this.cmpRoot, SWT.BORDER);
 		this.spnMonths.setEnabled(false);
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
 		this.lbl.setText("months");
 		
-		this.spnYears = new Spinner(this.cmpRoot, SWT.WRAP);
+		this.spnYears = new Spinner(this.cmpRoot, SWT.BORDER);
 		this.spnYears.setEnabled(false);
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
 		this.lbl.setText("years");

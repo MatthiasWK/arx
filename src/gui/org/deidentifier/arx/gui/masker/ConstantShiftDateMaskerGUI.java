@@ -83,12 +83,12 @@ public class ConstantShiftDateMaskerGUI implements ConfigurationComponent{
 		return false;
 	}
 
-	@Override
+	
 	public Composite getCmpRoot() {
 		return cmpRoot;
 	}
 
-	@Override
+	
 	public void setCmpRoot(Composite cmpRoot) {
 		this.cmpRoot = cmpRoot;		
 	}
