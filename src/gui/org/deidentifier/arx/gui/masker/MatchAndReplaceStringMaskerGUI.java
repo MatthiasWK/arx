@@ -47,18 +47,15 @@ public class MatchAndReplaceStringMaskerGUI implements ConfigurationComponent {
 		
 	}
 	
-	@Override
 	public boolean isValid() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public Composite getCmpRoot() {
 		return cmpRoot;
 	}
 
-	@Override
 	public void setCmpRoot(Composite cmpRoot) {
 		this.cmpRoot = cmpRoot;		
 	}

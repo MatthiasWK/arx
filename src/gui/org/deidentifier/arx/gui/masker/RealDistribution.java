@@ -689,17 +689,14 @@ public class RealDistribution implements ConfigurationComponent {
 		});
 	}
 	
-	@Override
 	public Composite getCmpRoot() {
 		return cmpRoot;
 	}
 
-	@Override
 	public void setCmpRoot(Composite cmpRoot) {
 		this.cmpRoot = cmpRoot;		
 	}
 
-	@Override
 	public boolean isValid() {
 		// TODO Auto-generated method stub
 		return false;

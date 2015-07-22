@@ -10,7 +10,10 @@ public class ConstantShiftDecimalMaskerGUI implements ConfigurationComponent{
 	private Composite cmpRoot;
 	
 	private Label lblShift;
+	
 	private Spinner spnInput;
+	
+	private Boolean spnInputValid;
 	
 	public ConstantShiftDecimalMaskerGUI(Composite root) {
 		this.cmpRoot = new Composite(root, SWT.BORDER);
@@ -19,22 +22,28 @@ public class ConstantShiftDecimalMaskerGUI implements ConfigurationComponent{
 		this.lblShift.setText("Shift Distance:");
 		this.spnInput = new Spinner(getCmpRoot(), SWT.BORDER);
 		this.spnInput.setDigits(2);
-		}
+		this.spnInput.setMaximum(10000);
+		this.spnInput.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					spnInputValid = true;
+		        } catch (NumberFormatException exc) {
+		        	spnInputValid = false;
+		        }
+			}
+		});
+	}
 
-	@Override
 	public Composite getCmpRoot() {
 		return cmpRoot;
 	}
 
-	@Override
 	public void setCmpRoot(Composite cmpRoot) {
 		this.cmpRoot = cmpRoot;		
 	}
 
-	@Override
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		return spnInputValid;
 	}
 
 

@@ -77,7 +77,6 @@ public class ConstantShiftDateMaskerGUI implements ConfigurationComponent{
 	}
 
 
-	@Override
 	public boolean isValid() {
 		// TODO Auto-generated method stub
 		return false;
