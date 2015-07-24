@@ -1,15 +1,20 @@
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 
 public class MaskerTool {
 	public static void main(String[] args) {
 		Display display = new Display();
 		Shell shell = new Shell (display);
 		shell.setText("Masker Tool");
+		shell.setLayout(SWTUtil.createGridLayout(1));
 		
 		final TabFolder tabFolder = new TabFolder(shell, SWT.BORDER);
 		
@@ -32,51 +37,38 @@ public class MaskerTool {
 	    	TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
 	      	tabItem.setText(maskerTypes[loopIndex]);
 	      
-	      	ConfigurationComponent gui = null;
-	      	switch (loopIndex) {
-	      		case 0:
-	      			gui = new GenerateRandomDateMaskerGUI(tabFolder);
-	      			break;
-	      		case 1:
-	      			gui = new GenerateRandomDecimalMaskerGUI(tabFolder);
-	      			break;
-	      		case 2:
-	      			gui = new GenerateRandomIntegerDecimalMaskerGUI(tabFolder);
-	      			break;
-	      		case 3:
-	      			gui = new GenerateRandomStringMaskerGUI(tabFolder);
-	      			break;
-	      		case 4:
-	      			gui = new ReplaceDictMaskerGUI(tabFolder);
-	      			break;
-	      		case 5:
-	      			gui = new ReplaceInstMaskerGUI(tabFolder);
-	      			break;
-	      		case 6:
-	      			gui = new ConstantShiftDateMaskerGUI(tabFolder);
-	      			break;
-	      		case 7:
-	      			gui = new ConstantShiftDecimalMaskerGUI(tabFolder);
-	      			break;
-	      		case 8:
-	      			gui = new MatchAndReplaceStringMaskerGUI(tabFolder);
-	      			break;
-	      		case 9:
-	      			gui = new RandomShiftDateMaskerGUI(tabFolder);
-	      			break;
-	      	    case 10:
-	      			gui = new RandomShiftDecimalMaskerGUI(tabFolder);
-	      			break;
-	      		case 11:
-	      			gui = new ShuffleMaskerGUI(tabFolder);
-	      			break;
-	      		case 12:
-	      			gui = new SplitAndReplaceStringMaskerGUI(tabFolder);
-	      			break;
-	      			
-	      	}
-	      	tabItem.setControl(gui.getCmpRoot());
+	      	Composite base = new Composite(tabFolder, SWT.NONE);
+	      	tabItem.setControl(base);
+	      	base.setLayout(new FillLayout());
 	      	
+	      	switch (loopIndex) {
+	      		case 0: new GenerateRandomDateMaskerGUI(base);
+	      			break;
+	      		case 1: new GenerateRandomDecimalMaskerGUI(base);
+	      			break;
+	      		case 2: new GenerateRandomIntegerDecimalMaskerGUI(base);
+	      			break;
+	      		case 3: new GenerateRandomStringMaskerGUI(base);
+	      			break;
+	      		case 4: new ReplaceDictMaskerGUI(base);
+	      			break;
+	      		case 5: new ReplaceInstMaskerGUI(base);
+	      			break;
+	      		case 6: new ConstantShiftDateMaskerGUI(base);
+	      			break;
+	      		case 7: new ConstantShiftDecimalMaskerGUI(base);
+	      			break;
+	      		case 8:  new MatchAndReplaceStringMaskerGUI(base);
+	      			break;
+	      		case 9:  new RandomShiftDateMaskerGUI(base);
+	      			break;
+	      	    case 10:  new RandomShiftDecimalMaskerGUI(base);
+	      			break;
+	      		case 11:  new ShuffleMaskerGUI(base);
+	      			break;
+	      		case 12:  new SplitAndReplaceStringMaskerGUI(base);
+	      			break;
+	      	}
 	    }
 
 	    tabFolder.addSelectionListener(new SelectionAdapter() {
@@ -84,8 +76,21 @@ public class MaskerTool {
 	          System.out.println(tabFolder.getSelection()[0].getText() + " selected");
 	        }
 	      });
+	    tabFolder.setLayoutData(SWTUtil.createFillGridData());
 	    
-	    tabFolder.setSize(shell.getSize());
+	    Composite buttons = new Composite(shell, SWT.NONE);
+	    buttons.setLayout(SWTUtil.createGridLayout(2));
+	    buttons.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+	    
+	    Button ok = new Button(buttons, SWT.PUSH);
+	    ok.setText("OK");
+	    ok.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+	    
+	    Button cancel = new Button(buttons, SWT.PUSH);
+	    cancel.setText("Cancel");
+	    cancel.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+	    
+	    
 		shell.pack();
 	    shell.open();
 	    while (!shell.isDisposed()) {

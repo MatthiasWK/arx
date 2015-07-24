@@ -1,34 +1,39 @@
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.deidentifier.arx.gui.view.SWTUtil;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 public class ReplaceDictMaskerGUI implements ConfigurationComponent {
 	static String replacementValueDouble = "";
 	static String replacementValueDate = "";
 	static String replacementValueString = "";
 	
-	private Label lbl;
+	private Label lbl1;
+	private Label lbl2;
 	
 	private Combo cmbDropdown;
-	
 	private Text txtDictionary;
+	
 	private Composite cmpRoot;
+	
+	private boolean dropDownValid = false;
+	private boolean dictionaryValid = false;
 	
 	public ReplaceDictMaskerGUI(Composite root) {
 		
 		this.cmpRoot = new Composite(root, SWT.NONE);
-      	this.cmpRoot.setLayout(new GridLayout (3, false));
+      	this.cmpRoot.setLayout(SWTUtil.createGridLayout(2));
       	
-      	this.lbl = new Label(this.cmpRoot, SWT.NULL);
-		this.lbl.setText("Replacement dictionary: ");
+      	this.lbl1 = new Label(this.cmpRoot, SWT.NONE);
+		this.lbl1.setText("Datatype:");
+		this.lbl1.setLayoutData(SWTUtil.createNoFillGridData());
 		
-		this.cmbDropdown = new Combo(this.cmpRoot, SWT.DROP_DOWN);
-		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 2;
-	    this.cmbDropdown.setLayoutData(gridData);
-	    this.cmbDropdown.setText("Choose data type...");
+		this.cmbDropdown = new Combo(this.cmpRoot, SWT.READ_ONLY);
+	    this.cmbDropdown.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 		String[] dataType = {	"Double",
 								"Date",
 								"String"
@@ -37,26 +42,44 @@ public class ReplaceDictMaskerGUI implements ConfigurationComponent {
 			this.cmbDropdown.add(s);
 		}
 		
-		this.lbl = new Label(this.cmpRoot, SWT.NULL);
+		this.lbl2 = new Label(this.cmpRoot, SWT.NULL);
+	    this.lbl2.setText("Dictionary: ");
+	    this.lbl2.setLayoutData(SWTUtil.createNoFillGridData());
 	    
 	    this.txtDictionary = new Text(this.cmpRoot, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		gridData = new GridData(SWT.FILL, 0, false, false);
-		gridData.heightHint = 100;
-		gridData.widthHint = 100;
-		this.txtDictionary.setLayoutData(gridData);
+		this.txtDictionary.setLayoutData(SWTUtil.createFillGridData());
       	
+		this.cmbDropdown.addModifyListener(new ModifyListener() {
+		    public void modifyText(ModifyEvent arg0) {
+                validateCmbDropdown();
+            }
+
+		});
+		this.txtDictionary.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent arg0) {
+                validateTxtDictionary();
+            }
+        });
+		
+		this.validateCmbDropdown();
+		this.validateTxtDictionary();
 	}
-	
+
+    private void validateCmbDropdown() {
+        dropDownValid = cmbDropdown.getSelectionIndex() != -1;
+    }
+
+    private void validateTxtDictionary() {
+        dictionaryValid = txtDictionary.getText().length() != 0;
+        // TODO: Add more
+    }
+    
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	    return dropDownValid && dictionaryValid;
 	}
 
-	public Composite getCmpRoot() {
-		return cmpRoot;
-	}
-
-	public void setCmpRoot(Composite cmpRoot) {
-		this.cmpRoot = cmpRoot;		
+	public void addModifyListener(ModifyListener listener) {
+	    cmbDropdown.addModifyListener(listener);
+	    txtDictionary.addModifyListener(listener);
 	}
 }
