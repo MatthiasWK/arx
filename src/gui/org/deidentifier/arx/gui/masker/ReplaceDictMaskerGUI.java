@@ -42,7 +42,7 @@ public class ReplaceDictMaskerGUI implements ConfigurationComponent {
 			this.cmbDropdown.add(s);
 		}
 		
-		this.lbl2 = new Label(this.cmpRoot, SWT.NULL);
+		this.lbl2 = new Label(this.cmpRoot, SWT.NONE);
 	    this.lbl2.setText("Dictionary: ");
 	    this.lbl2.setLayoutData(SWTUtil.createNoFillGridData());
 	    

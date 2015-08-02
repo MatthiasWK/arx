@@ -1,7 +1,12 @@
 
 
+import org.apache.commons.math3.distribution.RealDistribution;
+import org.deidentifier.arx.gui.view.SWTUtil;
+import org.deidentifier.arx.masking.RandomShiftDecimalMasker;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
@@ -9,65 +14,174 @@ import org.eclipse.swt.widgets.*;
 
 public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 	
-	private Label lbl;
+	private Label lblDist;
+	private Label lblShift;
+	private Label lblDescription;
 	
 	private Button btnShiftConstant;
 	
-	private Spinner spnShiftConstanatInput;
+	private Spinner spnShiftConstantInput;
 	
-	private RealDistribution distribution;
+	private Boolean shiftConstantValid = false;
+	private Boolean distributionValid = false;
+	
+	private RealDistributionGUI distribution;
 
 	private Composite cmpRoot;
+	private Composite cmpDesc;
+	private Composite cmpConfig;
+	private Composite cmpDist;
+	private Composite cmpShift;
 	
 	public RandomShiftDecimalMaskerGUI(Composite root) {
 		
-		this.cmpRoot = new Composite(root, SWT.BORDER);	
-		this.cmpRoot.setLayout (new GridLayout (9, false));
+		this.cmpRoot = new Composite(root, SWT.NONE);	
+		this.cmpRoot.setLayout(SWTUtil.createGridLayout(1));
 		
+		// Description
+//		this.cmpDesc = new Composite(cmpRoot, SWT.BORDER);
+//		this.cmpDesc.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+//		this.cmpDesc.setLayout(SWTUtil.createGridLayout(1));
+//		this.lblDescription = new Label(this.cmpDesc, SWT.NONE);
+// 		this.lblDescription.setText("A masker that shifts decimal numbers randomly according to a given probability distribution.\nThe shift is calculated by sampling from the provided distribution.\nOptionally, a shift constant can be added to the sampled value as to allow a quick and very basic modification of the distribution.");
+//		this.lblDescription.setLayoutData(SWTUtil.createGridData());
+
       	// Real distribution
- 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
- 		this.lbl.setText("Real distribution: ");
- 		this.distribution = new RealDistribution(this.cmpRoot);
+//		this.cmpConfig = new Composite(cmpRoot, SWT.BORDER);
+//		this.cmpConfig.setLayoutData(SWTUtil.createFillGridData());
+//		this.cmpConfig.setLayout(SWTUtil.createGridLayout(2));
  		
-		GridData gridData = new GridData();
-		gridData.horizontalAlignment = GridData.FILL;
-		gridData.grabExcessHorizontalSpace = true;
-	    gridData.horizontalSpan = 8;
-	    this.distribution.getCmpRoot().setLayoutData(gridData);
-	    this.distribution.getCmpRoot().layout(true);
+		this.lblDist = new Label(this.cmpRoot, SWT.NONE);
+ 		this.lblDist.setText("Real distribution: ");
+		this.lblDist.setLayoutData(SWTUtil.createNoFillGridData());
+		this.cmpDist = new Composite(cmpRoot, SWT.NONE);
+		this.cmpDist.setLayoutData(SWTUtil.createFillGridData());
+		this.cmpDist.setLayout(SWTUtil.createGridLayout(1));
 		
+ 		this.distribution = new RealDistributionGUI(this.cmpDist);
+ 		
 		// shift constant
-		this.lbl = new Label(this.cmpRoot, SWT.NULL);
-		this.lbl.setText("Shift constant: ");
+		this.lblShift = new Label(this.cmpRoot, SWT.NONE);
+		this.lblShift.setText("Shift constant: ");
+		this.lblShift.setLayoutData(SWTUtil.createNoFillGridData());
+ 		
+		this.cmpShift = new Composite(cmpRoot, SWT.NONE);
+		this.cmpShift.setLayout(SWTUtil.createGridLayout(2));
 		
-		this.btnShiftConstant = new Button(this.cmpRoot, SWT.CHECK);
+		this.btnShiftConstant = new Button(this.cmpShift, SWT.CHECK);
+		this.btnShiftConstant.setLayoutData(SWTUtil.createNoFillGridData());
 		
-		this.spnShiftConstanatInput = new Spinner(this.cmpRoot, SWT.BORDER);
-		this.spnShiftConstanatInput.setEnabled(false);
-		this.spnShiftConstanatInput.setDigits(2);
+		this.spnShiftConstantInput = new Spinner(this.cmpShift, SWT.BORDER);
+		this.spnShiftConstantInput.setEnabled(false);
+		this.spnShiftConstantInput.setDigits(2);
+		this.spnShiftConstantInput.setMaximum(1000000);
+		this.spnShiftConstantInput.setLayoutData(SWTUtil.createNoFillGridData());
 		
 		this.btnShiftConstant.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				if (btnShiftConstant.getSelection()) {
-					spnShiftConstanatInput.setEnabled(true);
+					spnShiftConstantInput.setEnabled(true);
+					validateSpnShiftConstantInput();
 				} else {
-					spnShiftConstanatInput.setEnabled(false);
+					spnShiftConstantInput.setEnabled(false);
+					validateSpnShiftConstantInput();
 				}
 			}
 		});
+		
+		this.spnShiftConstantInput.addModifyListener(new ModifyListener() {
+		    public void modifyText(ModifyEvent arg0) {
+                validateSpnShiftConstantInput();
+            }
+
+		});
+		
+		this.distribution.addModifyListener(new ModifyListener() {
+		    public void modifyText(ModifyEvent arg0) {
+                validateDistribution();
+            }
+
+		});
+		this.validateSpnShiftConstantInput();
+		this.validateDistribution();
 	}
 	
+	private void validateDistribution() {
+		this.distributionValid = this.distribution.isValid();		
+	}
+
+	private void validateSpnShiftConstantInput() {
+		if(this.spnShiftConstantInput.getEnabled()){
+			double input = this.spnShiftConstantInput.getSelection()*.01d;
+			this.shiftConstantValid = !(input == 0.00d);
+		}
+		else
+			this.shiftConstantValid = true;
+	}
+
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		if(!this.btnShiftConstant.getSelection()){
+			return this.distribution.isValid();
+		}
+		else{
+			return this.distribution.isValid() && shiftConstantValid;
+		}
+		
 	}
 
-	public Composite getCmpRoot() {
-		return cmpRoot;
+	public void addModifyListener(ModifyListener listener) {
+	    this.distribution.addModifyListener(listener);
+	    this.spnShiftConstantInput.addModifyListener(listener);
 	}
+	
+	public void addSelectionListener(SelectionAdapter adapter){
+		this.btnShiftConstant.addSelectionListener(adapter);
+	}
+	
+	public RandomShiftDecimalMasker getMasker(){
+		RealDistribution dist = null; // TODO: getDistribution() 
+		if(!this.btnShiftConstant.getSelection()){
+			return new RandomShiftDecimalMasker(dist);
+		}
+		else{
+			return new RandomShiftDecimalMasker(dist, this.spnShiftConstantInput.getSelection()*.01d);
+		}
+	}
+	
+	public static void main(String[] args) {
+		Display display = new Display();
+		Shell shell = new Shell (display);
+		shell.setLayout(SWTUtil.createGridLayout(1));
+		Composite root = new Composite(shell, SWT.BORDER);	
+		root.setLayout(SWTUtil.createGridLayout(1));
+		
+		final RandomShiftDecimalMaskerGUI cmp = new RandomShiftDecimalMaskerGUI(root);
+		
+		final Button next = new Button(root, SWT.PUSH);
+		next.setText("next >");
+		next.setEnabled(cmp.isValid());
+		
+		cmp.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent arg0) {
+				next.setEnabled(cmp.isValid());				
+			}
+			
+		});
+		
+		cmp.addSelectionListener(new SelectionAdapter(){
+			public void  widgetSelected(SelectionEvent event) {
+				next.setEnabled(cmp.isValid());				
+			}
+			
+		});
+		shell.pack ();
+		shell.open ();
 
-	public void setCmpRoot(Composite cmpRoot) {
-		this.cmpRoot = cmpRoot;		
+		while (!shell.isDisposed ()) {
+			if (!display.readAndDispatch ())
+				display.sleep ();
+		}
+		display.dispose ();
 	}
 }
 

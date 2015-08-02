@@ -23,7 +23,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	private Spinner spnMonths;
 	private Spinner spnYears;
 	
-	private IntegerDistribution distribution;
+	private IntegerDistributionGUI distribution;
 
 	
 	public GenerateRandomDateMaskerGUI(Composite root) {
@@ -36,7 +36,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 //		Composite distributions = MaskerTool.loadIntegerDistributions(8);
 //		distributions.setParent(this.cmpRoot);
 		
-		this.distribution = new IntegerDistribution(this.cmpRoot);
+		this.distribution = new IntegerDistributionGUI(this.cmpRoot);
 		
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;

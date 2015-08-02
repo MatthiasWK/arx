@@ -12,7 +12,7 @@ public class GenerateRandomIntegerDecimalMaskerGUI implements ConfigurationCompo
 	
 	private Spinner spnShiftConstant;
 	
-	private IntegerDistribution distribution;
+	private IntegerDistributionGUI distribution;
 
 	private Composite cmpRoot;
 	
@@ -25,7 +25,7 @@ public class GenerateRandomIntegerDecimalMaskerGUI implements ConfigurationCompo
       	// Integer distribution
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
 		this.lbl.setText("Integer distribution: ");
-		this.distribution = new IntegerDistribution(this.cmpRoot);
+		this.distribution = new IntegerDistributionGUI(this.cmpRoot);
 		
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;

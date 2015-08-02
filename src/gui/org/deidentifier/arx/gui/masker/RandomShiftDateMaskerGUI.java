@@ -11,7 +11,7 @@ public class RandomShiftDateMaskerGUI implements ConfigurationComponent{
 
 	private Label lbl;
 	
-	private IntegerDistribution distribution;
+	private IntegerDistributionGUI distribution;
 
 	private Button btnBasePeriod;
 	private Button btnShiftConstant;
@@ -33,7 +33,7 @@ public class RandomShiftDateMaskerGUI implements ConfigurationComponent{
 	  	// Integer distribution
  		this.lbl = new Label(this.cmpRoot, SWT.NULL);
  		this.lbl.setText("Integer distribution: ");
- 		this.distribution= new IntegerDistribution(this.cmpRoot);
+ 		this.distribution= new IntegerDistributionGUI(this.cmpRoot);
 	 		
  		GridData gridData = new GridData();
  		gridData.horizontalAlignment = GridData.FILL;

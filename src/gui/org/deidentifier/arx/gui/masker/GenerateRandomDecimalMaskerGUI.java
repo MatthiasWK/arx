@@ -13,7 +13,7 @@ public class GenerateRandomDecimalMaskerGUI implements ConfigurationComponent {
 	
 	private Spinner spnShiftConstant;
 	
-	private RealDistribution distribution;
+	private RealDistributionGUI distribution;
 
 	private Composite cmpRoot;
 	
@@ -25,7 +25,7 @@ public class GenerateRandomDecimalMaskerGUI implements ConfigurationComponent {
       	// Real distribution
  		this.lbl = new Label(this.cmpRoot, SWT.NULL);
  		this.lbl.setText("Real distribution: ");
- 		this.distribution = new RealDistribution(this.cmpRoot);
+ 		this.distribution = new RealDistributionGUI(this.cmpRoot);
  		
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;

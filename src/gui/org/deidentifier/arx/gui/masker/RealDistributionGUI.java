@@ -1,4 +1,6 @@
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -12,7 +14,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 
-public class RealDistribution implements ConfigurationComponent {
+public class RealDistributionGUI implements ConfigurationComponent {
 	static int comboHorizontalSpan = 8;
 	
 	private Composite cmpRoot;
@@ -31,18 +33,16 @@ public class RealDistribution implements ConfigurationComponent {
 	
 	private Button btn1;
 
-	public RealDistribution(Composite root) {
+	public RealDistributionGUI(Composite root) {
 		
-		cmpRoot = new Composite(root, SWT.NONE);
-		cmpRoot.setLayout(new GridLayout (comboHorizontalSpan, false));
+		this.cmpRoot = new Composite(root, SWT.NONE);
+		this.cmpRoot.setLayoutData(SWTUtil.createFillGridData());
+		this.cmpRoot.setLayout(SWTUtil.createGridLayout(1));
 		
-		cmbDropdown = new Combo(cmpRoot, SWT.DROP_DOWN);
-		GridData gridData = new GridData();
-		gridData.horizontalAlignment = GridData.BEGINNING;
-		gridData.grabExcessHorizontalSpace = true;
-	    gridData.horizontalSpan = comboHorizontalSpan;
-	    cmbDropdown.setLayoutData(gridData);
-	    cmbDropdown.setText("Choose your distribution...");
+		this.cmbDropdown = new Combo(cmpRoot, SWT.READ_ONLY);
+		this.cmbDropdown.setLayoutData(SWTUtil.createFillHorizontallyGridData());
+
+	    this.cmbDropdown.setText("Choose your distribution...");
 	    String[] distributions = {	"Abstract Real Distribution",
 									"Beta Distribution",
 									"Cauchy Distribution",
@@ -62,16 +62,14 @@ public class RealDistribution implements ConfigurationComponent {
 									"Weibull Distribution"
 								 };
 		for (String s: distributions) {
-			cmbDropdown.add(s);
+			this.cmbDropdown.add(s);
 		}
 		
 		// composite for parameters of real distribution
-		cmpParam = new Composite(cmpRoot, SWT.NONE);
-		gridData = new GridData();
-	    gridData.horizontalSpan = comboHorizontalSpan;
-	    cmpParam.setLayoutData(gridData);
+		this.cmpParam = new Composite(cmpRoot, SWT.NONE);
+	    this.cmpParam.setLayoutData(SWTUtil.createFillGridData());
 	    
-	    cmbDropdown.addSelectionListener(new SelectionAdapter() {
+	    this.cmbDropdown.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				int selectedIndex = cmbDropdown.getSelectionIndex();
 				for (Control child: cmpParam.getChildren()) {
@@ -83,7 +81,7 @@ public class RealDistribution implements ConfigurationComponent {
 						break;
 					case 1: // Beta Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double alpha, double beta [, double inverseCumAccuracy]");
-						cmpParam.setLayout(new GridLayout (3, false));
+						cmpParam.setLayout(SWTUtil.createGridLayout(3));
 						
 						spn1 = new Spinner(cmpParam, SWT.BORDER);
 						spn1.setDigits(2);
@@ -122,9 +120,7 @@ public class RealDistribution implements ConfigurationComponent {
 						});
 						
 						cmpParam.layout();
-						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));						
 						break;
 					case 2: // Cauchy Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double median, double scale [, double inverseCumAccuracy]");
@@ -168,8 +164,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 3: // Chi Squared Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double degreesOfFreedom [, double inverseCumAccuracy]");
@@ -204,8 +200,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 4: // Empirical Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int binCount");
@@ -218,8 +214,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 5: // Enumerated Real Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double[] singletons, double[] probabilites");
@@ -241,8 +237,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 6: // Exponential Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double mean [, double inverseCumAccuracy]");
@@ -277,8 +273,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 7: // F Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double numeratorDegreesOfFreedom, double denominatorDegreesOfFreedom [, double inverseCumAccuracy]");
@@ -322,8 +318,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 8: // Gamma Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double shape, double scale [, double inverseCumAccuracy]");
@@ -367,8 +363,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 9: // Levy Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": RandomGenerator rng, double mu, double c ");
@@ -389,8 +385,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 10: // Log Normal Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double scale, double shape [, double inverseCumAccuracy]");
@@ -434,8 +430,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 11: // Normal Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double mean, double sd [, double inverseCumAccuracy]");
@@ -479,8 +475,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 12: // Pareto Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double scale, double shape [, double inverseCumAccuracy]");
@@ -524,8 +520,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 13: // T Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double degreesOfFreedom [, double inverseCumAccuracy]");
@@ -560,8 +556,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 14: // Triangular Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double a, double c, double b");
@@ -588,8 +584,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 15: // Uniform Real Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double lower, double upper [, double inverseCumAccuracy]");
@@ -634,8 +630,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 					case 16: // Weibull Distribution
 						System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double alpha, double beta [, double inverseCumAccuracy]");
@@ -680,8 +676,8 @@ public class RealDistribution implements ConfigurationComponent {
 						
 						cmpParam.layout();
 						cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-						cmpRoot.layout();
-						cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+						
+						
 						break;
 				}
 				cmpRoot.layout(true, true);
@@ -699,6 +695,11 @@ public class RealDistribution implements ConfigurationComponent {
 
 	public boolean isValid() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
+	}
+
+	public void addModifyListener(ModifyListener modifyListener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

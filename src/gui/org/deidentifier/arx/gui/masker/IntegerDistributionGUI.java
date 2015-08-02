@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 
-public class IntegerDistribution implements ConfigurationComponent{
+public class IntegerDistributionGUI implements ConfigurationComponent{
 
 	static int comboHorizontalSpan = 8;
 	
@@ -34,7 +34,7 @@ public class IntegerDistribution implements ConfigurationComponent{
 	
 	private Button btn1;
 	
-	public IntegerDistribution(Composite root){
+	public IntegerDistributionGUI(Composite root){
 		this.cmpRoot = new Composite(root, SWT.NONE);
 		this.cmpRoot.setLayout(new GridLayout (comboHorizontalSpan, false));
 		
@@ -285,7 +285,7 @@ public class IntegerDistribution implements ConfigurationComponent{
 		shell.setLayout (layout);
 		shell.setText("IntegerDistribution");
 
-		IntegerDistribution c1 = new IntegerDistribution(shell);
+		IntegerDistributionGUI c1 = new IntegerDistributionGUI(shell);
 		
 		shell.pack ();
 		shell.open ();
