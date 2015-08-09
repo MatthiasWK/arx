@@ -31,8 +31,6 @@ public class GenerateRandomDecimalMaskerGUI implements ConfigurationComponent {
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 	    gridData.horizontalSpan = 8;
-		this.distribution.getCmpRoot().setLayoutData(gridData);
-		this.distribution.getCmpRoot().layout(true);
 		
  		// shift constant
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
