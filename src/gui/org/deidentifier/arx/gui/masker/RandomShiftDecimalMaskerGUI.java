@@ -74,7 +74,8 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		this.spnShiftConstantInput = new Spinner(this.cmpShift, SWT.BORDER);
 		this.spnShiftConstantInput.setEnabled(false);
 		this.spnShiftConstantInput.setDigits(2);
-		this.spnShiftConstantInput.setMaximum(1000000);
+		this.spnShiftConstantInput.setMaximum(100000);
+		this.spnShiftConstantInput.setMinimum(-100000);
 		this.spnShiftConstantInput.setLayoutData(SWTUtil.createGridData());
 		
 		this.btnShiftConstant.addSelectionListener(new SelectionAdapter() {
