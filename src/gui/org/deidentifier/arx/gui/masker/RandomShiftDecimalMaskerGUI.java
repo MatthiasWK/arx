@@ -159,13 +159,13 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 	    buttons.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 	    
 		final Button next = new Button(buttons, SWT.PUSH);
-		next.setText("next >");
-		next.setLayoutData(SWTUtil.createNoFillGridData());
+		next.setText("ok");
+		next.setLayoutData(SWTUtil.createFillHorizontallyGridData());
 		next.setEnabled(cmp.isValid());
 		
 		next.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				System.out.println(cmp.distribution.isValid());
+				RandomShiftDecimalMasker masker = cmp.getMasker();
 			}
 		});
 
