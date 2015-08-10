@@ -161,6 +161,7 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		next.setText("next >");
 		next.setLayoutData(SWTUtil.createNoFillGridData());
 		next.setEnabled(cmp.isValid());
+		
 		next.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				System.out.println(cmp.distribution.isValid());

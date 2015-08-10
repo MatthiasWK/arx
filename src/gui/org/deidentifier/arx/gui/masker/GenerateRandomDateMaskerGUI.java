@@ -1,5 +1,7 @@
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
@@ -25,6 +27,8 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	
 	private IntegerDistributionGUI distribution;
 
+	private Composite cmpDist;
+
 	
 	public GenerateRandomDateMaskerGUI(Composite root) {
 		this.cmpRoot = new Composite(root, SWT.NONE);
@@ -33,10 +37,11 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		// Integer distribution
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
 		this.lbl.setText("Integer distribution: ");
-//		Composite distributions = MaskerTool.loadIntegerDistributions(8);
-//		distributions.setParent(this.cmpRoot);
+		this.cmpDist = new Composite(cmpRoot, SWT.NONE);
+		this.cmpDist.setLayoutData(SWTUtil.createSpanColumnsAndFillGridData(8));
+		this.cmpDist.setLayout(SWTUtil.createGridLayout(1));
 		
-		this.distribution = new IntegerDistributionGUI(this.cmpRoot);
+		this.distribution = new IntegerDistributionGUI(this.cmpDist);
 		
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;
@@ -44,8 +49,6 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	    gridData.horizontalSpan = 8;
 //		distributions.setLayoutData(gridData);
 //		distributions.layout(true);
-	    this.distribution.getCmpRoot().setLayoutData(gridData);
-	    this.distribution.getCmpRoot().layout(true);
 	    
 		// baseDate
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
@@ -135,12 +138,9 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		return false;
 	}
 
-	public Composite getCmpRoot() {
-		return cmpRoot;
-	}
-
-	public void setCmpRoot(Composite cmpRoot) {
-		this.cmpRoot = cmpRoot;		
+	public void addModifyListener(ModifyListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

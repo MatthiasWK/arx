@@ -1,4 +1,5 @@
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -302,12 +303,9 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 		return false;
 	}
 
-	public Composite getCmpRoot() {
-		return cmpRoot;
-	}
-
-	public void setCmpRoot(Composite cmpRoot) {
-		this.cmpRoot = cmpRoot;		
+	public void addModifyListener(ModifyListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

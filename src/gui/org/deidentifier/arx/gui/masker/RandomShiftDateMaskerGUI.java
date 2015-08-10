@@ -1,7 +1,9 @@
 
 
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
@@ -24,6 +26,8 @@ public class RandomShiftDateMaskerGUI implements ConfigurationComponent{
 	private DateTime dtTimePeriod;
 
 	private Composite cmpRoot;
+
+	private Composite cmpDist;
 	
 	public RandomShiftDateMaskerGUI(Composite root) {
 		
@@ -33,14 +37,16 @@ public class RandomShiftDateMaskerGUI implements ConfigurationComponent{
 	  	// Integer distribution
  		this.lbl = new Label(this.cmpRoot, SWT.NULL);
  		this.lbl.setText("Integer distribution: ");
- 		this.distribution= new IntegerDistributionGUI(this.cmpRoot);
+		this.cmpDist = new Composite(cmpRoot, SWT.NONE);
+		this.cmpDist.setLayoutData(SWTUtil.createSpanColumnsAndFillGridData(8));
+		this.cmpDist.setLayout(SWTUtil.createGridLayout(1));
+		
+		this.distribution = new IntegerDistributionGUI(this.cmpDist);
 	 		
  		GridData gridData = new GridData();
  		gridData.horizontalAlignment = GridData.FILL;
  		gridData.grabExcessHorizontalSpace = true;
  	    gridData.horizontalSpan = 8;
- 		this.distribution.getCmpRoot().setLayoutData(gridData);
- 		this.distribution.getCmpRoot().layout(true);
 		
 		// basePeriod
 		this.lbl = new Label(this.cmpRoot, SWT.NULL);
@@ -120,11 +126,8 @@ public class RandomShiftDateMaskerGUI implements ConfigurationComponent{
 		return false;
 	}
 
-	public Composite getCmpRoot() {
-		return cmpRoot;
-	}
-
-	public void setCmpRoot(Composite cmpRoot) {
-		this.cmpRoot = cmpRoot;		
+	public void addModifyListener(ModifyListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

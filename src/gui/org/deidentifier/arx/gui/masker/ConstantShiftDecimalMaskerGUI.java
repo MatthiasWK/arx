@@ -18,9 +18,9 @@ public class ConstantShiftDecimalMaskerGUI implements ConfigurationComponent{
 	public ConstantShiftDecimalMaskerGUI(Composite root) {
 		this.cmpRoot = new Composite(root, SWT.BORDER);
 		this.cmpRoot.setLayout(new GridLayout (2, false));
-		this.lblShift = new Label(getCmpRoot(), SWT.NONE);
+		this.lblShift = new Label(cmpRoot, SWT.NONE);
 		this.lblShift.setText("Shift Distance:");
-		this.spnInput = new Spinner(getCmpRoot(), SWT.BORDER);
+		this.spnInput = new Spinner(cmpRoot, SWT.BORDER);
 		this.spnInput.setDigits(2);
 		this.spnInput.setMaximum(10000);
 		this.spnInput.addSelectionListener(new SelectionAdapter() {
@@ -34,16 +34,13 @@ public class ConstantShiftDecimalMaskerGUI implements ConfigurationComponent{
 		});
 	}
 
-	public Composite getCmpRoot() {
-		return cmpRoot;
-	}
-
-	public void setCmpRoot(Composite cmpRoot) {
-		this.cmpRoot = cmpRoot;		
-	}
-
 	public boolean isValid() {
 		return spnInputValid;
+	}
+
+	public void addModifyListener(ModifyListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

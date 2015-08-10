@@ -6,6 +6,7 @@ import org.apache.commons.math3.random.RandomGenerator;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.masking.Random;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -36,7 +37,8 @@ public class RealDistributionGUI implements ConfigurationComponent {
 	private Spinner spn1;
 	private Spinner spn2;
 	private Spinner spn3;
-	
+
+	private boolean dropDownValid;	
 //	private Boolean spn1Valid = false;
 //	private Boolean spn2Valid = false;
 //	private Boolean spn3Valid = false;
@@ -45,6 +47,7 @@ public class RealDistributionGUI implements ConfigurationComponent {
 //	private Text txtProbabilities;
 	
 	private Button btn1;
+
 
 	public RealDistributionGUI(Composite root) {
 		
@@ -742,6 +745,15 @@ public class RealDistributionGUI implements ConfigurationComponent {
 				cmpRoot.layout(true, true);
 			}
 		});
+	    
+	    this.cmbDropdown.addModifyListener(new ModifyListener() {
+		    public void modifyText(ModifyEvent arg0) {
+                validateCmbDropdown();
+            }
+
+		});
+	    
+	    validateCmbDropdown();
 	}
 	
 	private void validateSpn1(){
@@ -764,8 +776,12 @@ public class RealDistributionGUI implements ConfigurationComponent {
 	
 	}
 	
+	private void validateCmbDropdown() {
+        this.dropDownValid = this.cmbDropdown.getSelectionIndex() != -1;
+    }
+	
 	public boolean isValid() {		
-		return true;
+		return this.dropDownValid;
 	}
 
 	public void addModifyListener(ModifyListener listener) {

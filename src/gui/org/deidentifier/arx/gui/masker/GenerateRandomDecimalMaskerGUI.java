@@ -1,5 +1,7 @@
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
@@ -16,6 +18,8 @@ public class GenerateRandomDecimalMaskerGUI implements ConfigurationComponent {
 	private RealDistributionGUI distribution;
 
 	private Composite cmpRoot;
+
+	private Composite cmpDist;
 	
 	public GenerateRandomDecimalMaskerGUI(Composite root) {
 		
@@ -25,7 +29,11 @@ public class GenerateRandomDecimalMaskerGUI implements ConfigurationComponent {
       	// Real distribution
  		this.lbl = new Label(this.cmpRoot, SWT.NULL);
  		this.lbl.setText("Real distribution: ");
- 		this.distribution = new RealDistributionGUI(this.cmpRoot);
+		this.cmpDist = new Composite(cmpRoot, SWT.NONE);
+		this.cmpDist.setLayoutData(SWTUtil.createSpanColumnsAndFillGridData(8));
+		this.cmpDist.setLayout(SWTUtil.createGridLayout(1));
+		
+		this.distribution = new RealDistributionGUI(this.cmpDist);
  		
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;
@@ -65,11 +73,8 @@ public class GenerateRandomDecimalMaskerGUI implements ConfigurationComponent {
 		return false;
 	}
 
-	public Composite getCmpRoot() {
-		return cmpRoot;
-	}
-
-	public void setCmpRoot(Composite cmpRoot) {
-		this.cmpRoot = cmpRoot;		
+	public void addModifyListener(ModifyListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }
