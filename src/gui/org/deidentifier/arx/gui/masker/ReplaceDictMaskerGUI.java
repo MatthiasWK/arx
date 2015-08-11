@@ -2,6 +2,7 @@ import org.deidentifier.arx.gui.view.SWTUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -81,5 +82,11 @@ public class ReplaceDictMaskerGUI implements ConfigurationComponent {
 	public void addModifyListener(ModifyListener listener) {
 	    cmbDropdown.addModifyListener(listener);
 	    txtDictionary.addModifyListener(listener);
+	}
+
+	
+	public void addSelectionListener(SelectionAdapter adapter) {
+		// TODO Auto-generated method stub
+		
 	}
 }

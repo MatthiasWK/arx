@@ -35,4 +35,10 @@ public class ShuffleMaskerGUI implements ConfigurationComponent{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	public void addSelectionListener(SelectionAdapter adapter) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -35,10 +35,16 @@ public class ConstantShiftDecimalMaskerGUI implements ConfigurationComponent{
 	}
 
 	public boolean isValid() {
-		return spnInputValid;
+		return false;
 	}
 
 	public void addModifyListener(ModifyListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	public void addSelectionListener(SelectionAdapter adapter) {
 		// TODO Auto-generated method stub
 		
 	}

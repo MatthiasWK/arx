@@ -143,4 +143,9 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		
 	}
 
+	public void addSelectionListener(SelectionAdapter adapter) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
