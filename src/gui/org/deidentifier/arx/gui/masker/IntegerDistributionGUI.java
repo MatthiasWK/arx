@@ -1,3 +1,9 @@
+import org.apache.commons.math3.distribution.BinomialDistribution;
+import org.apache.commons.math3.distribution.ExponentialDistribution;
+import org.apache.commons.math3.distribution.IntegerDistribution;
+import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.math3.distribution.PoissonDistribution;
+import org.apache.commons.math3.distribution.UniformIntegerDistribution;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -40,9 +46,13 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 	private Button btn1;
 	private Button btn2;
 	
-	private boolean dropDownValid;
+	private boolean dropDownValid = false;
+	private Boolean spn1Valid = false;
+	private Boolean spn2Valid = false;
+	private Boolean spn3Valid = false;
 	
 	private ModifyListener MListener;
+	private SelectionAdapter SAdapter;
 	
 	public IntegerDistributionGUI(Composite root){
 		this.cmpRoot = new Composite(root, SWT.BORDER);
@@ -82,7 +92,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 							
 							case 0: // Binomial Distribution
 								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int trials, double p");
-								cmpParam.setLayout(new GridLayout (2, false));
+								cmpParam.setLayout(SWTUtil.createGridLayout(2));
 								
 								lbl1 = new Label(cmpParam, SWT.NONE);
 								lbl1.setText("Trials:");
@@ -91,7 +101,6 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								spn1 = new Spinner(cmpParam, SWT.BORDER);
 								spn1.setMaximum(1000000);
 								spn1.setLayoutData(SWTUtil.createGridData());
-								spn1.addModifyListener(MListener);
 								
 								lbl2 = new Label(cmpParam, SWT.NONE);
 								lbl2.setText("Probability of Success:");
@@ -103,7 +112,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								break;
 							case 1: // Poisson Distribution
 								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double p [, double epsilon] [, int maxIterations]");
-								cmpParam.setLayout(new GridLayout (3, false));
+								cmpParam.setLayout(SWTUtil.createGridLayout(3));
 
 								lbl1 = new Label(cmpParam, SWT.NONE);
 								lbl1.setText("Specified Mean:");
@@ -162,9 +171,9 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								break;
 							case 2: // Uniform Integer Distribution
 								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int lower, int upper");
-								cmpParam.setLayout(new GridLayout (2, false));
+								cmpParam.setLayout(SWTUtil.createGridLayout(2));
 								
-								lbl1 = new Label(cmpParam, SWT.NULL);
+								lbl1 = new Label(cmpParam, SWT.NONE);
 								lbl1.setText("Lower Bound (inclusive):");
 								lbl1.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 								
@@ -172,13 +181,31 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								spn1.setMaximum(1000000);
 								spn1.setLayoutData(SWTUtil.createGridData());
 
-								lbl2 = new Label(cmpParam, SWT.NULL);
+								lbl2 = new Label(cmpParam, SWT.NONE);
 								lbl2.setText("Upper Bound (inclusive):");
 								lbl2.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 								
 								spn2= new Spinner(cmpParam, SWT.BORDER);
 								spn2.setMaximum(1000000);
 								spn2.setLayoutData(SWTUtil.createGridData());
+								
+								spn1.addModifyListener(new ModifyListener(){
+									public void modifyText(ModifyEvent arg0) {
+										validateSpn1();
+										validateSpn2();
+									}						
+								});
+								
+								spn2.addModifyListener(new ModifyListener(){
+									public void modifyText(ModifyEvent arg0) {
+										validateSpn1();
+										validateSpn2();
+									}						
+								});
+								
+								spn1.addModifyListener(MListener);
+								spn2.addModifyListener(MListener);
+
 								break;
 								/*
 							case 3: // Enumerated Integer Distribution
@@ -288,17 +315,18 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								break;
 								*/
 						}
+
+					    validateSpn1();
+					    validateSpn2();
+					    validateSpn3();
+						validateCmbDropdown();
 						cmpRoot.layout(true, true);
 					}
 			    });
 			    
-			    this.cmbDropdown.addModifyListener(new ModifyListener() {
-				    public void modifyText(ModifyEvent arg0) {
-		                validateCmbDropdown();
-		            }
-
-				});
-			    
+			    validateSpn1();
+			    validateSpn2();
+			    validateSpn3();
 			    validateCmbDropdown();
 	}
 	
@@ -306,22 +334,85 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
         this.dropDownValid = this.cmbDropdown.getSelectionIndex() != -1;
     }
 
+	private void validateSpn1(){
+		switch(this.cmbDropdown.getSelectionIndex()){
+		case 0: // Binomial
+			this.spn1Valid = true;
+			break;
+		case 1: // Poisson
+			this.spn1Valid = true;
+			break;
+		case 2: // Uniform Integer
+			this.spn1Valid = (this.spn1.getSelection() < this.spn2.getSelection());
+			break;
+		}
+	}
+	
+	private void validateSpn2(){
+		switch(this.cmbDropdown.getSelectionIndex()){
+		case 0: // Binomial
+			this.spn2Valid = true;
+			break;
+		case 1: // Poisson
+			this.spn2Valid = true;
+			break;
+		case 2: // Uniform Integer
+			this.spn2Valid = (this.spn1.getSelection() < this.spn2.getSelection());
+			break;
+		}
+	}
+
+	private void validateSpn3(){
+		switch(this.cmbDropdown.getSelectionIndex()){
+		case 0: // Binomial
+			this.spn3Valid = true;
+			break;
+		case 1: // Poisson
+			this.spn3Valid = true;
+			break;
+		case 2: // Uniform Integer
+			this.spn3Valid = true;
+			break;
+		}
+	}
 	
 	public boolean isValid() {
 		//ToDo: add validation
-		return this.dropDownValid;
+		return this.dropDownValid && this.spn1Valid && this.spn2Valid && this.spn3Valid;
 	}
 
 	public void addModifyListener(ModifyListener listener) {
 		//ToDo: add modifyListeners
-		this.cmbDropdown.addModifyListener(listener);	
 		this.MListener = listener;
 	}
 
 	public void addSelectionListener(SelectionAdapter adapter) {		
-		//ToDo: add selectionListeners
+		this.cmbDropdown.addSelectionListener(adapter);	
+		this.SAdapter = adapter;
 	}
 	
+	public IntegerDistribution getDistribution(){
+		IntegerDistribution dist = null;
+		switch(this.cmbDropdown.getSelectionIndex()){
+			case 0: // Binomial
+				dist = new BinomialDistribution(spn1.getSelection(), spn2.getSelection()*.01d);
+				break;
+			case 1: // Poisson
+				if(!btn1.getSelection() && !btn2.getSelection())
+					dist = new PoissonDistribution(spn1.getSelection()*.01d);
+				else if(btn1.getSelection() && !btn2.getSelection())
+					dist = new PoissonDistribution(spn1.getSelection()*.01d, spn2.getSelection()*.01d);
+				else if(!btn1.getSelection() && btn2.getSelection())
+					dist = new PoissonDistribution(spn1.getSelection()*.01d, spn3.getSelection());	
+				else if(btn1.getSelection() && btn2.getSelection())
+					dist = new PoissonDistribution(spn1.getSelection()*.01d, spn2.getSelection()*.01d, spn3.getSelection());					
+				break;
+			case 2: // Uniform Integer
+				dist = new UniformIntegerDistribution(spn1.getSelection(), spn2.getSelection());
+				break;
+		}
+		return dist;
+	}
 	// For testing purposes
 	public static void main(String[] args) {
 		Display display = new Display ();
@@ -329,22 +420,28 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 		shell.setLayout (SWTUtil.createGridLayout(1));
 		shell.setText("IntegerDistribution");
 
-		IntegerDistributionGUI c1 = new IntegerDistributionGUI(shell);
+		final IntegerDistributionGUI c1 = new IntegerDistributionGUI(shell);
 		
-		c1.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent arg0) {
-				System.out.println("bla");
-			}
-    	});
-		
-		Button ok = new Button(shell, SWT.PUSH);
+		final Button ok = new Button(shell, SWT.PUSH);
 		ok.setText("ok");
+		ok.setEnabled(c1.isValid());
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event) {
-				System.out.println("ok");
+				c1.getDistribution();
 			}
 		});
 		
+		c1.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent arg0) {
+				ok.setEnabled(c1.isValid());
+			}
+    	});
+		c1.addSelectionListener(new SelectionAdapter(){
+			public void  widgetSelected(SelectionEvent event) {
+				ok.setEnabled(c1.isValid());				
+			}
+			
+		});
 		shell.pack ();
 		shell.open ();
 

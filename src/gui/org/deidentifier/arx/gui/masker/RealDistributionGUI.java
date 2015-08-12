@@ -37,9 +37,9 @@ public class RealDistributionGUI implements ConfigurationComponent {
 	private Spinner spn3;
 
 	private boolean dropDownValid;	
-//	private Boolean spn1Valid = false;
-//	private Boolean spn2Valid = false;
-//	private Boolean spn3Valid = false;
+	private Boolean spn1Valid = false;
+	private Boolean spn2Valid = false;
+	private Boolean spn3Valid = false;
 	
 //	private Text txtSingletons;
 //	private Text txtProbabilities;
@@ -710,38 +710,61 @@ public class RealDistributionGUI implements ConfigurationComponent {
 						break;
 						*/
 				}
+
+		        validateSpn1();
+		        validateSpn2();
+		        validateSpn3();
+				validateCmbDropdown();
 				cmpRoot.layout(true, true);
 			}
 		});
 	    
-	    this.cmbDropdown.addModifyListener(new ModifyListener() {
-		    public void modifyText(ModifyEvent arg0) {
-                validateCmbDropdown();
-            }
-
-		});
-	    
+        validateSpn1();
+        validateSpn2();
+        validateSpn3();
 	    validateCmbDropdown();
 	}
 	
 	private void validateSpn1(){
 		switch(this.cmbDropdown.getSelectionIndex()){
 		case 0: // Exponential
-			
+			this.spn1Valid = true;
 			break;
 		case 1: // Normal
+			this.spn1Valid = true;
 			break;
 		case 2: // Chi Squared
+			this.spn1Valid = true;
 			break;
-	}
+		}
 	}
 	
 	private void validateSpn2(){
-		
+		switch(this.cmbDropdown.getSelectionIndex()){
+		case 0: // Exponential
+			this.spn2Valid = true;
+			break;
+		case 1: // Normal
+			this.spn2Valid = true;
+			break;
+		case 2: // Chi Squared
+			this.spn2Valid = true;
+			break;
+		}
 	}
 
 	private void validateSpn3(){
-	
+		switch(this.cmbDropdown.getSelectionIndex()){
+		case 0: // Exponential
+			this.spn3Valid = true;
+			break;
+		case 1: // Normal
+			this.spn3Valid = true;
+			break;
+		case 2: // Chi Squared
+			this.spn3Valid = true;
+			break;
+		}
 	}
 	
 	private void validateCmbDropdown() {
@@ -750,16 +773,16 @@ public class RealDistributionGUI implements ConfigurationComponent {
 	
 	public boolean isValid() {		
 		//ToDo: add validation
-		return this.dropDownValid;
-	}
+		return this.dropDownValid && this.spn1Valid && this.spn2Valid && this.spn3Valid;
+		}
 
 	public void addModifyListener(ModifyListener listener) {
 		//ToDo: add modifyListeners
-		this.cmbDropdown.addModifyListener(listener);
 	}
 
 	public void addSelectionListener(SelectionAdapter adapter) {		
 		//ToDo: add selectionListeners
+		this.cmbDropdown.addSelectionListener(adapter);
 	}
 	
 	public RealDistribution getDistribution(){

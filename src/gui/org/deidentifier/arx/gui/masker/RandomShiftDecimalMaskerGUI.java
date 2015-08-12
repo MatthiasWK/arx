@@ -47,18 +47,12 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 //		this.lblDescription.setLayoutData(SWTUtil.createGridData());
 
       	// Real distribution
-//		this.cmpConfig = new Composite(cmpRoot, SWT.BORDER);
-//		this.cmpConfig.setLayoutData(SWTUtil.createFillGridData());
-//		this.cmpConfig.setLayout(SWTUtil.createGridLayout(2));
-		this.cmpDist = new Composite(cmpRoot, SWT.NONE);
-		this.cmpDist.setLayoutData(SWTUtil.createFillGridData());
-		this.cmpDist.setLayout(SWTUtil.createGridLayout(1));
  		
-		this.lblDist = new Label(this.cmpDist, SWT.NONE);
- 		this.lblDist.setText("Real distribution: ");
+		this.lblDist = new Label(this.cmpRoot, SWT.NONE);
+ 		this.lblDist.setText("Real distribution:");
 		this.lblDist.setLayoutData(SWTUtil.createNoFillGridData());
 		
- 		this.distribution = new RealDistributionGUI(this.cmpDist);
+ 		this.distribution = new RealDistributionGUI(this.cmpRoot);
  		
 		// shift constant
 		this.cmpShift = new Composite(cmpRoot, SWT.NONE);
@@ -144,7 +138,7 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 			return new RandomShiftDecimalMasker(dist, this.spnShiftConstantInput.getSelection()*.01d);
 		}
 	}
-	
+	// For testing purposes
 	public static void main(String[] args) {
 		Display display = new Display();
 		Shell shell = new Shell (display);
@@ -153,7 +147,7 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		root.setLayout(new FillLayout() );
 		root.setLayoutData(SWTUtil.createFillGridData());
 		
-		final RandomShiftDecimalMaskerGUI cmp = new RandomShiftDecimalMaskerGUI(root);
+		final ConfigurationComponent cmp = new RandomShiftDecimalMaskerGUI(root);
 		
 		Composite buttons = new Composite(shell, SWT.NONE);
 	    buttons.setLayout(SWTUtil.createGridLayout(2));
@@ -166,7 +160,7 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		
 		next.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				RandomShiftDecimalMasker masker = cmp.getMasker();
+				RandomShiftDecimalMasker masker = ((RandomShiftDecimalMaskerGUI) cmp).getMasker();
 			}
 		});
 
