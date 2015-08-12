@@ -27,8 +27,6 @@ public class RealDistributionGUI implements ConfigurationComponent {
 	
 	private Combo cmbDropdown;
 	private Composite cmpParam;
-	private Composite cmpParamSub1;
-	private Composite cmpParamSub2;
 	
 	private Label lbl1;
 	private Label lbl2;
@@ -51,7 +49,7 @@ public class RealDistributionGUI implements ConfigurationComponent {
 
 	public RealDistributionGUI(Composite root) {
 		
-		this.cmpRoot = new Composite(root, SWT.NONE);
+		this.cmpRoot = new Composite(root, SWT.BORDER);
 		this.cmpRoot.setLayoutData(SWTUtil.createFillGridData());
 		this.cmpRoot.setLayout(SWTUtil.createGridLayout(1));
 		
@@ -82,14 +80,8 @@ public class RealDistributionGUI implements ConfigurationComponent {
 		}
 		
 		// composite for parameters of real distribution
-		this.cmpParam = new Composite(cmpRoot, SWT.BORDER);
+		this.cmpParam = new Composite(cmpRoot, SWT.NONE);
 	    this.cmpParam.setLayoutData(SWTUtil.createFillGridData());
-	    
-		final GridData center = new GridData();
-	    center.horizontalAlignment = SWT.LEFT;
-		center.verticalAlignment = SWT.CENTER;
-		center.grabExcessHorizontalSpace = false;
-		center.grabExcessVerticalSpace = false;
 	    
 	    this.cmbDropdown.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
@@ -100,39 +92,31 @@ public class RealDistributionGUI implements ConfigurationComponent {
 				switch (selectedIndex) {
 				case 0: // Exponential Distribution
 					System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double mean [, double inverseCumAccuracy]");
-					cmpParam.setLayout(SWTUtil.createGridLayout(1));
-					
-					cmpParamSub1 = new Composite(cmpParam, SWT.NONE);
-					cmpParamSub1.setLayoutData(SWTUtil.createFillGridData());
-					cmpParamSub1.setLayout(SWTUtil.createGridLayout(1));
-
-					lbl1 = new Label(cmpParamSub1, SWT.NONE);
+					cmpParam.setLayout(SWTUtil.createGridLayout(3));
+	
+					lbl1 = new Label(cmpParam, SWT.NONE);
 					lbl1.setText("Mean:");
-				    lbl1.setLayoutData(SWTUtil.createNoFillGridData());
+				    lbl1.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
 				    
-					spn1 = new Spinner(cmpParamSub1, SWT.BORDER);
+					spn1 = new Spinner(cmpParam, SWT.BORDER);
 					spn1.setDigits(2);
 					spn1.setMaximum(100000);
 					spn1.setMinimum(1);
-					spn1.setLayoutData(SWTUtil.createNoFillGridData());
+					spn1.setLayoutData(SWTUtil.createGridData());
 					
-				    cmpParamSub2 = new Composite(cmpParam, SWT.NONE);
-					cmpParamSub2.setLayoutData(SWTUtil.createFillGridData());
-				    cmpParamSub2.setLayout(SWTUtil.createGridLayout(2));
-					
-					lbl2 = new Label(cmpParamSub2, SWT.NONE);
+					lbl2 = new Label(cmpParam, SWT.NONE);
 					lbl2.setText("Maximum absolute error\nin inverse cumulative\nprobability estimates:");
-					lbl2.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
+					lbl2.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 				    
-					btn1 = new Button(cmpParamSub2, SWT.CHECK);
+					btn1 = new Button(cmpParam, SWT.CHECK);
 					btn1.setLayoutData(SWTUtil.createGridData());
 					
-					spn2 = new Spinner(cmpParamSub2, SWT.BORDER);
+					spn2 = new Spinner(cmpParam, SWT.BORDER);
 					spn2.setEnabled(false);
 					spn2.setDigits(2);
 					spn2.setMaximum(100000);
 					spn2.setMinimum(-100000);
-					spn2.setLayoutData(SWTUtil.createNoFillGridData());
+					spn2.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 					
 					btn1.addSelectionListener(new SelectionAdapter() {
 						public void widgetSelected(SelectionEvent event) {
@@ -148,49 +132,41 @@ public class RealDistributionGUI implements ConfigurationComponent {
 				case 1: // Normal Distribution
 					System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double mean, double sd [, double inverseCumAccuracy]");
 					
-					cmpParam.setLayout(SWTUtil.createGridLayout(1));
-					
-					cmpParamSub1 = new Composite(cmpParam, SWT.NONE);
-					cmpParamSub1.setLayoutData(SWTUtil.createFillGridData());
-					cmpParamSub1.setLayout(SWTUtil.createGridLayout(1));
+					cmpParam.setLayout(SWTUtil.createGridLayout(3));
 
-					lbl1 = new Label(cmpParamSub1, SWT.NONE);
+					lbl1 = new Label(cmpParam, SWT.NONE);
 					lbl1.setText("Mean:");
-				    lbl1.setLayoutData(SWTUtil.createGridData());
+				    lbl1.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
 				    
-					spn1 = new Spinner(cmpParamSub1, SWT.BORDER);
+					spn1 = new Spinner(cmpParam, SWT.BORDER);
 					spn1.setDigits(2);
 					spn1.setMaximum(100000);
 					spn1.setMinimum(-100000);
-					spn1.setLayoutData(SWTUtil.createNoFillGridData());
+					spn1.setLayoutData(SWTUtil.createGridData());
 					
-					lbl2 = new Label(cmpParamSub1, SWT.NONE);
+					lbl2 = new Label(cmpParam, SWT.NONE);
 					lbl2.setText("Standard deviation:");
-				    lbl2.setLayoutData(SWTUtil.createGridData());
+				    lbl2.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
 				    
-					spn2 = new Spinner(cmpParamSub1, SWT.BORDER);
+					spn2 = new Spinner(cmpParam, SWT.BORDER);
 					spn2.setDigits(2);
 					spn2.setMaximum(100000);
 					spn2.setMinimum(1);
-					spn2.setLayoutData(SWTUtil.createNoFillGridData());
+					spn2.setLayoutData(SWTUtil.createGridData());
 					
-				    cmpParamSub2 = new Composite(cmpParam, SWT.NONE);
-					cmpParamSub2.setLayoutData(SWTUtil.createFillGridData());
-				    cmpParamSub2.setLayout(SWTUtil.createGridLayout(2));
-					
-					lbl3 = new Label(cmpParamSub2, SWT.NONE);
+					lbl3 = new Label(cmpParam, SWT.NONE);
 					lbl3.setText("Maximum absolute error\nin inverse cumulative\nprobability estimates:");
-					lbl3.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
+					lbl3.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 				    
-					btn1 = new Button(cmpParamSub2, SWT.CHECK);
+					btn1 = new Button(cmpParam, SWT.CHECK);
 					btn1.setLayoutData(SWTUtil.createGridData());
 					
-					spn3 = new Spinner(cmpParamSub2, SWT.BORDER);
+					spn3 = new Spinner(cmpParam, SWT.BORDER);
 					spn3.setEnabled(false);
 					spn3.setDigits(2);
 					spn3.setMaximum(100000);
 					spn3.setMinimum(-100000);
-					spn3.setLayoutData(SWTUtil.createNoFillGridData());
+					spn3.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 					
 					btn1.addSelectionListener(new SelectionAdapter() {
 						public void widgetSelected(SelectionEvent event) {
@@ -205,39 +181,31 @@ public class RealDistributionGUI implements ConfigurationComponent {
 					break;
 				case 2: // Chi Squared Distribution
 					System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double degreesOfFreedom [, double inverseCumAccuracy]");
-					cmpParam.setLayout(SWTUtil.createGridLayout(1));
-					
-					cmpParamSub1 = new Composite(cmpParam, SWT.NONE);
-					cmpParamSub1.setLayoutData(SWTUtil.createFillGridData());
-					cmpParamSub1.setLayout(SWTUtil.createGridLayout(1));
+					cmpParam.setLayout(SWTUtil.createGridLayout(3));
 
-					lbl1 = new Label(cmpParamSub1, SWT.NONE);
+					lbl1 = new Label(cmpParam, SWT.NONE);
 					lbl1.setText("Degrees of freedom:");
-				    lbl1.setLayoutData(SWTUtil.createNoFillGridData());
+				    lbl1.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
 				    
-					spn1 = new Spinner(cmpParamSub1, SWT.BORDER);
+					spn1 = new Spinner(cmpParam, SWT.BORDER);
 					spn1.setDigits(2);
 					spn1.setMaximum(100000);
 					spn1.setMinimum(-100000);
-					spn1.setLayoutData(SWTUtil.createNoFillGridData());
+					spn1.setLayoutData(SWTUtil.createGridData());
 					
-				    cmpParamSub2 = new Composite(cmpParam, SWT.NONE);
-					cmpParamSub2.setLayoutData(SWTUtil.createFillGridData());
-				    cmpParamSub2.setLayout(SWTUtil.createGridLayout(2));
-					
-					lbl2 = new Label(cmpParamSub2, SWT.NONE);
+					lbl2 = new Label(cmpParam, SWT.NONE);
 					lbl2.setText("Maximum absolute error\nin inverse cumulative\nprobability estimates:");
-					lbl2.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
+					lbl2.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 				    
-					btn1 = new Button(cmpParamSub2, SWT.CHECK);
+					btn1 = new Button(cmpParam, SWT.CHECK);
 					btn1.setLayoutData(SWTUtil.createGridData());
 					
-					spn2 = new Spinner(cmpParamSub2, SWT.BORDER);
+					spn2 = new Spinner(cmpParam, SWT.BORDER);
 					spn2.setEnabled(false);
 					spn2.setDigits(2);
 					spn2.setMaximum(100000);
 					spn2.setMinimum(-100000);
-					spn2.setLayoutData(SWTUtil.createNoFillGridData());
+					spn2.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 					
 					btn1.addSelectionListener(new SelectionAdapter() {
 						public void widgetSelected(SelectionEvent event) {
@@ -781,41 +749,17 @@ public class RealDistributionGUI implements ConfigurationComponent {
     }
 	
 	public boolean isValid() {		
+		//ToDo: add validation
 		return this.dropDownValid;
 	}
 
 	public void addModifyListener(ModifyListener listener) {
-		switch(this.cmbDropdown.getSelectionIndex()){
-		case 0: // Exponential
-			this.spn1.addModifyListener(listener);
-			this.spn2.addModifyListener(listener);
-			break;
-		case 1: // Normal
-			this.spn1.addModifyListener(listener);
-			this.spn2.addModifyListener(listener);
-			this.spn3.addModifyListener(listener);
-			break;
-		case 2: // Chi Squared
-			this.spn1.addModifyListener(listener);
-			this.spn2.addModifyListener(listener);
-			break;
-	}
-		
+		//ToDo: add modifyListeners
+		this.cmbDropdown.addModifyListener(listener);
 	}
 
-	public void addSelectionListener(SelectionAdapter adapter) {
-		switch(this.cmbDropdown.getSelectionIndex()){
-		case 0: // Exponential
-			this.btn1.addSelectionListener(adapter);
-			break;
-		case 1: // Normal
-			this.btn1.addSelectionListener(adapter);
-			break;
-		case 2: // Chi Squared
-			this.btn1.addSelectionListener(adapter);
-			break;
-		}
-		this.cmbDropdown.addSelectionListener(adapter);
+	public void addSelectionListener(SelectionAdapter adapter) {		
+		//ToDo: add selectionListeners
 	}
 	
 	public RealDistribution getDistribution(){

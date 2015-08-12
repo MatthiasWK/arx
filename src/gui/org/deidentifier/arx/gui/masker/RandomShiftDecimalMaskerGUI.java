@@ -50,23 +50,24 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 //		this.cmpConfig = new Composite(cmpRoot, SWT.BORDER);
 //		this.cmpConfig.setLayoutData(SWTUtil.createFillGridData());
 //		this.cmpConfig.setLayout(SWTUtil.createGridLayout(2));
- 		
-		this.lblDist = new Label(this.cmpRoot, SWT.NONE);
- 		this.lblDist.setText("Real distribution: ");
-		this.lblDist.setLayoutData(SWTUtil.createNoFillGridData());
 		this.cmpDist = new Composite(cmpRoot, SWT.NONE);
 		this.cmpDist.setLayoutData(SWTUtil.createFillGridData());
 		this.cmpDist.setLayout(SWTUtil.createGridLayout(1));
+ 		
+		this.lblDist = new Label(this.cmpDist, SWT.NONE);
+ 		this.lblDist.setText("Real distribution: ");
+		this.lblDist.setLayoutData(SWTUtil.createNoFillGridData());
 		
  		this.distribution = new RealDistributionGUI(this.cmpDist);
  		
 		// shift constant
 		this.cmpShift = new Composite(cmpRoot, SWT.NONE);
-		this.cmpShift.setLayout(SWTUtil.createGridLayout(2));
+		this.cmpShift.setLayout(SWTUtil.createGridLayout(3));
+		this.cmpShift.setLayoutData(SWTUtil.createFillGridData());
 		
 		this.lblShift = new Label(this.cmpShift, SWT.NONE);
 		this.lblShift.setText("Shift constant: ");
-		this.lblShift.setLayoutData(SWTUtil.createSpanColumnsGridData(2));
+		this.lblShift.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
  			
 		this.btnShiftConstant = new Button(this.cmpShift, SWT.CHECK);
 		this.btnShiftConstant.setLayoutData(SWTUtil.createGridData());
