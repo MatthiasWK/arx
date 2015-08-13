@@ -1,4 +1,7 @@
 import org.deidentifier.arx.gui.view.SWTUtil;
+import org.deidentifier.arx.masking.GenerateRandomDateMasker;
+import org.deidentifier.arx.masking.GenerateRandomStringMasker;
+import org.deidentifier.arx.masking.MatchAndReplaceStringMasker;
 import org.deidentifier.arx.masking.RandomShiftDecimalMasker;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -128,10 +131,17 @@ public class MaskerTool {
 	    ok.addSelectionListener(new SelectionAdapter(){
 	    	public void widgetSelected(SelectionEvent event) {
 	    		switch(tabFolder.getSelectionIndex()){
+	    		case 3:
+	    			GenerateRandomStringMasker masker3 = ((GenerateRandomStringMaskerGUI) GUIs[3]).getMasker();
+	    			System.out.println(masker3);
+	    			break;
+	    		case 8:
+	    			MatchAndReplaceStringMasker masker8 = ((MatchAndReplaceStringMaskerGUI) GUIs[8]).getMasker();
+	    			System.out.println(masker8);
+	    			break;
 	    		case 10:
-	    			RandomShiftDecimalMaskerGUI GUI = (RandomShiftDecimalMaskerGUI) GUIs[10];
-	    			RandomShiftDecimalMasker masker = GUI.getMasker();
-	    			System.out.println(masker);
+	    			RandomShiftDecimalMasker masker10 = ((RandomShiftDecimalMaskerGUI) GUIs[10]).getMasker();
+	    			System.out.println(masker10);
 	    			break;
 	    		}
 	    	}
