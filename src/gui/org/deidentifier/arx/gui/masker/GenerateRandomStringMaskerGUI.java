@@ -1,5 +1,7 @@
+import org.deidentifier.arx.masking.GenerateRandomStringMasker;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
@@ -29,6 +31,9 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
 	private Spinner spnLength;
 
 	private Composite cmpRoot;
+	
+	private Boolean charSet1Valid = false;
+	private Boolean charSet2Valid = false;
 	
 	public GenerateRandomStringMaskerGUI(Composite root) {
 		
@@ -93,9 +98,17 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
  			public void widgetSelected(SelectionEvent event) {
  				if (btn3.getSelection()) {
  					txtCharSet.setEnabled(true);
+ 					validateCharSet();
  				} else {
  					txtCharSet.setEnabled(false);
+ 					validateCharSet();
  				}
+ 			}
+ 		});
+ 		
+ 		this.txtCharSet.addModifyListener(new ModifyListener() {
+ 			public void modifyText(ModifyEvent arg0) {
+ 				validateCharSet();
  			}
  		});
  		
@@ -175,9 +188,17 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
  			public void widgetSelected(SelectionEvent event) {
  				if (btnCheckCharSet.getSelection()) {
  					txtCharSet2.setEnabled(true);
+ 					validateCharSet();
  				} else {
  					txtCharSet2.setEnabled(false);
+ 					validateCharSet();
  				}
+ 			}
+ 		});
+ 		
+ 		this.txtCharSet2.addModifyListener(new ModifyListener() {
+ 			public void modifyText(ModifyEvent arg0) {
+ 				validateCharSet();
  			}
  		});
  		
@@ -193,21 +214,77 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
  			}
  		});
       	
+ 		this.validateCharSet();
+	}
+	
+	private void validateCharSet() {
+		if (this.btn3.getSelection()) {
+			if (this.txtCharSet.getEnabled()) {
+				this.charSet1Valid = (this.txtCharSet.getText() == "") ? false : true;
+			}
+			this.charSet2Valid = true;
+		} else {
+			this.charSet1Valid = true;
+		}
+		
+		if (this.btn4.getSelection()) {
+			if (this.txtCharSet2.getEnabled()) {
+				this.charSet2Valid = (this.txtCharSet2.getText() == "") ? false : true;
+			} else {
+				this.charSet2Valid = true;
+			}
+			this.charSet1Valid = true;
+		} else {
+			this.charSet2Valid = true;
+		}
 	}
 	
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		return (this.btn1.getSelection() || this.btn2.getSelection() || this.btn3.getSelection() || this.btn4.getSelection()) &&
+				this.charSet1Valid && this.charSet2Valid;
 	}
 
 	public void addModifyListener(ModifyListener listener) {
-		// TODO Auto-generated method stub
-		
+		this.txtCharSet.addModifyListener(listener);
+		this.spnLength.addModifyListener(listener);
+		this.txtCharSet2.addModifyListener(listener);
 	}
 
 	
 	public void addSelectionListener(SelectionAdapter adapter) {
-		// TODO Auto-generated method stub
-		
+		this.btn1.addSelectionListener(adapter);
+		this.btn2.addSelectionListener(adapter);
+		this.btn3.addSelectionListener(adapter);
+		this.btn4.addSelectionListener(adapter);
+		this.btnLetters.addSelectionListener(adapter);
+		this.btnNumbers.addSelectionListener(adapter);
+		this.btnCheckCharSet.addSelectionListener(adapter);
+		this.btnCheckLettersNumbers.addSelectionListener(adapter);
+		this.btnLetters2.addSelectionListener(adapter);
+		this.btnNumbers2.addSelectionListener(adapter);
+	}
+	
+	public GenerateRandomStringMasker getMasker() {
+		if (this.btn2.getSelection()) {
+			return new GenerateRandomStringMasker(this.btnLetters.getSelection(), this.btnNumbers.getSelection());
+		} else if (this.btn3.getSelection()) {
+			return new GenerateRandomStringMasker(this.txtCharSet.getText().toCharArray());
+		} else if (this.btn4.getSelection()) {
+			int length = this.spnLength.getDigits();
+			if (this.btnCheckCharSet.getSelection() && this.btnCheckLettersNumbers.getSelection() == false) {
+				return new GenerateRandomStringMasker(length, this.txtCharSet2.getText().toCharArray());
+			} else if (this.btnCheckCharSet.getSelection() == false && this.btnCheckLettersNumbers.getSelection()) {
+				return new GenerateRandomStringMasker(length, this.btnLetters2.getSelection(), this.btnNumbers2.getSelection());
+			} else if (this.btnCheckCharSet.getSelection() && this.btnCheckLettersNumbers.getSelection()) {
+				return new GenerateRandomStringMasker(	length,
+														this.btnLetters2.getSelection(),
+														this.btnNumbers2.getSelection(),
+														this.txtCharSet2.getText().toCharArray());
+			} else {
+				return new GenerateRandomStringMasker(length);
+			}
+		} else {
+			return new GenerateRandomStringMasker();
+		}
 	}
 }
