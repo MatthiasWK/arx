@@ -343,7 +343,14 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 			this.spn1Valid = true;
 			break;
 		case 2: // Uniform Integer
-			this.spn1Valid = (this.spn1.getSelection() < this.spn2.getSelection());
+			if (this.spn1.getSelection() < this.spn2.getSelection()){
+				spn1.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+				this.spn1Valid = true;
+			}
+			else{
+				spn1.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
+				this.spn1Valid = false;
+			}
 			break;
 		}
 	}
@@ -357,7 +364,14 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 			this.spn2Valid = true;
 			break;
 		case 2: // Uniform Integer
-			this.spn2Valid = (this.spn1.getSelection() < this.spn2.getSelection());
+			if (this.spn1.getSelection() < this.spn2.getSelection()){
+				spn2.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+				this.spn2Valid = true;
+			}
+			else{
+				spn2.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
+				this.spn2Valid = false;
+			}
 			break;
 		}
 	}

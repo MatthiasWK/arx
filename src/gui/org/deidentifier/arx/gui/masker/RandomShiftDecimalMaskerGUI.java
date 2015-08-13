@@ -110,6 +110,10 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		if(this.spnShiftConstantInput.getEnabled()){
 			double input = this.spnShiftConstantInput.getSelection()*.01d;
 			this.shiftConstantValid = !(input == 0.00d);
+			if(this.shiftConstantValid) 
+				this.spnShiftConstantInput.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+			else
+				this.spnShiftConstantInput.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));			
 		}
 		else
 			this.shiftConstantValid = true;
