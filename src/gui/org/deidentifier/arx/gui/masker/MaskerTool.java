@@ -25,7 +25,7 @@ public class MaskerTool {
 		String[] maskerTypes = {	"GenerateRandomDateMasker",
 									"GenerateRandomDecimalMasker",
 									"GenerateRandomIntegerDecimalMasker",
-									"GenerateRandomStringMakser",
+									"GenerateRandomStringMasker",
 									"ReplaceDictMasker",
 									"ReplaceInstMasker",
 									"ConstantShiftDateMasker",
