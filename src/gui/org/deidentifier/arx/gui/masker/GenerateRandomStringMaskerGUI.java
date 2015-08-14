@@ -270,7 +270,7 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
 		} else if (this.btn3.getSelection()) {
 			return new GenerateRandomStringMasker(this.txtCharSet.getText().toCharArray());
 		} else if (this.btn4.getSelection()) {
-			int length = this.spnLength.getDigits();
+			int length = Integer.parseInt(this.spnLength.getText());
 			if (this.btnCheckCharSet.getSelection() && this.btnCheckLettersNumbers.getSelection() == false) {
 				return new GenerateRandomStringMasker(length, this.txtCharSet2.getText().toCharArray());
 			} else if (this.btnCheckCharSet.getSelection() == false && this.btnCheckLettersNumbers.getSelection()) {
