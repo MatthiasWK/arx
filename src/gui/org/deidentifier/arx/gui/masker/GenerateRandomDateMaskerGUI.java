@@ -59,7 +59,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		this.lbl.setLayoutData(SWTUtil.createNoFillGridData());
 		
 		this.dtDate = new DateTime(this.cmpConfig, SWT.CALENDAR);
-		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+		GridData gridData = SWTUtil.createFillVerticallyGridData();
 	    gridData.horizontalSpan = 9;
 	    this.dtDate.setLayoutData(gridData);
 		this.dtTime = new DateTime(this.cmpConfig, SWT.TIME);
