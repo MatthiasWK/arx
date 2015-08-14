@@ -1,3 +1,4 @@
+import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.masking.GenerateRandomStringMasker;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.ModifyListener;
@@ -38,16 +39,14 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
 	public GenerateRandomStringMaskerGUI(Composite root) {
 		
 		this.cmpRoot = new Composite(root, SWT.NONE);
-      	this.cmpRoot.setLayout(new GridLayout (3, false));
+      	this.cmpRoot.setLayout(SWTUtil.createGridLayout(3));
       	
       	// no parameter
  		this.btn1 = new Button(this.cmpRoot, SWT.RADIO);
  		this.lbl = new Label(this.cmpRoot, SWT.NONE);
  		this.lbl.setText("No parameters (Creates a masker generating strings with the same length as the input, using only alphabetic characters.)");
 
- 		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
- 	    gridData.horizontalSpan = 2;
- 	    this.lbl.setLayoutData(gridData);
+ 	    this.lbl.setLayoutData(SWTUtil.createSpanColumnsAndFillGridData(2));
  		
  	    // boolean letters, boolean numbers
  		this.btn2 = new Button(this.cmpRoot, SWT.RADIO);
@@ -90,9 +89,7 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
 
  		this.txtCharSet = new Text(this.cmpRoot, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
  		this.txtCharSet.setEnabled(false);
- 		gridData = new GridData(SWT.FILL, 0, false, false);
- 		gridData.heightHint = 50;
- 		this.txtCharSet.setLayoutData(gridData);
+ 		this.txtCharSet.setLayoutData(SWTUtil.createFillVerticallyGridData());
  		
  		this.btn3.addSelectionListener(new SelectionAdapter() {
  			public void widgetSelected(SelectionEvent event) {
@@ -128,9 +125,7 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
  		
  		this.lbl = new Label(this.cmp3, SWT.NONE);
  		this.lbl.setText("(int length)");
- 		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
- 	    gridData.horizontalSpan = 3;
- 	    this.lbl.setLayoutData(gridData);
+ 	    this.lbl.setLayoutData(SWTUtil.createSpanColumnsAndFillGridData(3));
  		
  		this.btnCheckCharSet = new Button(this.cmp3, SWT.CHECK);
  		this.btnCheckCharSet.setLayoutData(new GridData(SWT.RIGHT, SWT.BEGINNING, false, false));
@@ -142,7 +137,7 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
  		
  		this.txtCharSet2 = new Text(this.cmp3, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
  		this.txtCharSet2.setEnabled(false);
- 		gridData = new GridData(SWT.FILL, 0, false, false);
+ 		GridData gridData = SWTUtil.createGridData();
  		gridData.heightHint = 50;
  	    gridData.horizontalSpan = 2;
  	    this.txtCharSet2.setLayoutData(gridData);
@@ -161,9 +156,7 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
  		this.lbl.setText("alphabetic characters");
 
  		this.lbl = new Label(this.cmp3, SWT.NONE);
- 		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
- 	    gridData.horizontalSpan = 2;
- 	    this.lbl.setLayoutData(gridData);
+ 	    this.lbl.setLayoutData(SWTUtil.createSpanColumnsAndFillGridData(2));
  	    
  	    this.btnNumbers2 = new Button(this.cmp3, SWT.CHECK);
  	    this.btnNumbers2.setEnabled(false);

@@ -56,7 +56,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		// baseDate
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("Base Date: ");
-		this.lbl.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+		this.lbl.setLayoutData(SWTUtil.createNoFillGridData());
 		
 		this.dtDate = new DateTime(this.cmpConfig, SWT.CALENDAR);
 		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
@@ -77,9 +77,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("(int)");
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 8;
-	    this.lbl.setLayoutData(gridData);
+	    this.lbl.setLayoutData(SWTUtil.createSpanColumnsAndFillGridData(8));
 		
 	    this.btnCheckShiftConstant.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
