@@ -1,14 +1,15 @@
+import org.apache.commons.math3.distribution.IntegerDistribution;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.masking.GenerateRandomDateMasker;
-import org.deidentifier.arx.masking.RandomShiftDecimalMasker;
 import org.eclipse.swt.*;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.DateTime;
+import org.joda.time.Period;
 
 public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	
@@ -27,13 +28,15 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	
 	private Spinner spnShiftConstant;
 	private Spinner spnDays;
+	private Spinner spnWeeks;
 	private Spinner spnMonths;
 	private Spinner spnYears;
 	
 	private IntegerDistributionGUI distribution;
 	private Label lblDist;
 
-
+	private Boolean shiftConstantValid = false;
+	private Boolean basePeriodValid = false;
 	
 	public GenerateRandomDateMaskerGUI(Composite root) {
 		this.cmpRoot = new Composite(root, SWT.NONE);
@@ -48,7 +51,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		
 		this.cmpConfig = new Composite(cmpRoot, SWT.NONE);
 		this.cmpConfig.setLayoutData(SWTUtil.createFillGridData());
-      	this.cmpConfig.setLayout(SWTUtil.createGridLayout(9));
+      	this.cmpConfig.setLayout(SWTUtil.createGridLayout(11));
 	    
 		// baseDate
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
@@ -57,7 +60,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		
 		this.dtDate = new DateTime(this.cmpConfig, SWT.CALENDAR);
 		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 7;
+	    gridData.horizontalSpan = 9;
 	    this.dtDate.setLayoutData(gridData);
 		this.dtTime = new DateTime(this.cmpConfig, SWT.TIME);
 		this.dtTime.setTime(0, 0, 0);
@@ -75,7 +78,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("(int)");
 		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-	    gridData.horizontalSpan = 6;
+	    gridData.horizontalSpan = 8;
 	    this.lbl.setLayoutData(gridData);
 		
 	    this.btnCheckShiftConstant.addSelectionListener(new SelectionAdapter() {
@@ -85,8 +88,15 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 				} else {
 					spnShiftConstant.setEnabled(false);
 				}
+				validateShiftConstant();
 			}
 		});
+	    
+	    this.spnShiftConstant.addModifyListener(new ModifyListener() {
+	    	public void modifyText(ModifyEvent arg0) {
+	    		validateShiftConstant();
+	    	}
+	    });
 		
 		// basePeriod
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
@@ -99,6 +109,12 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		this.spnDays.setMaximum(100000);
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("days");
+		
+		this.spnWeeks = new Spinner(this.cmpConfig, SWT.BORDER);
+		this.spnWeeks.setEnabled(false);
+		this.spnWeeks.setMaximum(100000);
+		this.lbl = new Label(this.cmpConfig, SWT.NULL);
+		this.lbl.setText("weeks");
 		
 		this.spnMonths = new Spinner(this.cmpConfig, SWT.BORDER);
 		this.spnMonths.setEnabled(false);
@@ -120,39 +136,134 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 			public void widgetSelected(SelectionEvent event) {
 				if (btnCheckBasePeriod.getSelection()) {
 					spnDays.setEnabled(true);
+					spnWeeks.setEnabled(true);
 					spnMonths.setEnabled(true);
 					spnYears.setEnabled(true);
 					dtTimePeriod.setEnabled(true);
 				} else {
 					spnDays.setEnabled(false);
+					spnWeeks.setEnabled(false);
 					spnMonths.setEnabled(false);
 					spnYears.setEnabled(false);
 					dtTimePeriod.setEnabled(false);
 				}
+				validateBasePeriod();
 			}
 		});
+		
+		this.spnDays.addModifyListener(new ModifyListener() {
+	    	public void modifyText(ModifyEvent arg0) {
+	    		validateBasePeriod();
+	    	}
+	    });
+		
+		this.spnWeeks.addModifyListener(new ModifyListener() {
+	    	public void modifyText(ModifyEvent arg0) {
+	    		validateBasePeriod();
+	    	}
+	    });
+		
+		this.spnMonths.addModifyListener(new ModifyListener() {
+	    	public void modifyText(ModifyEvent arg0) {
+	    		validateBasePeriod();
+	    	}
+	    });
+		
+		this.spnYears.addModifyListener(new ModifyListener() {
+	    	public void modifyText(ModifyEvent arg0) {
+	    		validateBasePeriod();
+	    	}
+	    });
+		
+		this.dtTimePeriod.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				validateBasePeriod();
+			}
+		});
+		
+		validateShiftConstant();
+		validateBasePeriod();
 	}
 
+	private void validateShiftConstant() {
+		if (this.spnShiftConstant.getEnabled()) {
+			this.shiftConstantValid = (Integer.parseInt(this.spnShiftConstant.getText()) == 0) ? false : true;
+		} else {
+			this.shiftConstantValid = true;
+		}
+	}
+	
+	private void validateBasePeriod() {
+		if (this.btnCheckBasePeriod.getSelection()) {
+			if (Integer.parseInt(this.spnDays.getText()) > 0 || Integer.parseInt(this.spnWeeks.getText()) > 0 ||
+					Integer.parseInt(this.spnMonths.getText()) > 0 || Integer.parseInt(this.spnYears.getText()) > 0 ||
+					this.dtTimePeriod.getHours() > 0 || this.dtTimePeriod.getMinutes() > 0 ||
+					this.dtTimePeriod.getSeconds() > 0) {
+				this.basePeriodValid = true;
+			} else {
+				this.basePeriodValid = false;
+			}
+		} else {
+			this.basePeriodValid = true;
+		}
+	}
+	
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.distribution.isValid() && this.shiftConstantValid && this.basePeriodValid;
 	}
 
 	public void addModifyListener(ModifyListener listener) {
 		this.distribution.addModifyListener(listener);
-		// TODO Auto-generated method stub
-		
+		this.spnShiftConstant.addModifyListener(listener);
+		this.spnDays.addModifyListener(listener);
+		this.spnWeeks.addModifyListener(listener);
+		this.spnMonths.addModifyListener(listener);
+		this.spnYears.addModifyListener(listener);
 	}
 
 	public void addSelectionListener(SelectionAdapter adapter) {
 		this.distribution.addSelectionListener(adapter);
-		// TODO Auto-generated method stub
-		
+		this.dtDate.addSelectionListener(adapter);
+		this.dtTime.addSelectionListener(adapter);
+		this.btnCheckShiftConstant.addSelectionListener(adapter);
+		this.btnCheckBasePeriod.addSelectionListener(adapter);
+		this.dtTimePeriod.addSelectionListener(adapter);
 	}
 
 	public GenerateRandomDateMasker getMasker() {
-		// TODO Auto-generated method stub
-		return null;
+		IntegerDistribution dist = this.distribution.getDistribution(); // TODO: getDistribution()
+		org.joda.time.DateTime baseDate = new org.joda.time.DateTime(	this.dtDate.getYear(),
+																		this.dtDate.getMonth()+1,
+																		this.dtDate.getDay(),
+																		this.dtTime.getHours(),
+																		this.dtTime.getMinutes(),
+																		this.dtTime.getSeconds()
+																	);
+		if (this.btnCheckShiftConstant.getSelection() && this.btnCheckBasePeriod.getSelection() == false) {
+			return new GenerateRandomDateMasker(dist, Integer.parseInt(this.spnShiftConstant.getText()), baseDate);
+		} else if (this.btnCheckShiftConstant.getSelection() == false && this.btnCheckBasePeriod.getSelection()) {
+			Period basePeriod = new Period(	Integer.parseInt(this.spnYears.getText()),
+											Integer.parseInt(this.spnMonths.getText()),
+											Integer.parseInt(this.spnWeeks.getText()),
+											Integer.parseInt(this.spnDays.getText()),
+											this.dtTimePeriod.getHours(),
+											this.dtTimePeriod.getMinutes(),
+											this.dtTimePeriod.getSeconds(),
+											0);
+			return new GenerateRandomDateMasker(dist, baseDate, basePeriod);
+		} else if (this.btnCheckShiftConstant.getSelection() && this.btnCheckBasePeriod.getSelection()) {
+			Period basePeriod = new Period(	Integer.parseInt(this.spnYears.getText()),
+											Integer.parseInt(this.spnMonths.getText()),
+											Integer.parseInt(this.spnWeeks.getText()),
+											Integer.parseInt(this.spnDays.getText()),
+											this.dtTimePeriod.getHours(),
+											this.dtTimePeriod.getMinutes(),
+											this.dtTimePeriod.getSeconds(),
+											0);
+			return new GenerateRandomDateMasker(dist, Integer.parseInt(this.spnShiftConstant.getText()), baseDate, basePeriod);
+		} else {
+			return new GenerateRandomDateMasker(dist, baseDate);
+		}
 	}
 
 	// For testing purposes
