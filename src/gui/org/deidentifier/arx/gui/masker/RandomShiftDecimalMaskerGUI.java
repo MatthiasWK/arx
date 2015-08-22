@@ -1,5 +1,6 @@
 
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.math3.distribution.RealDistribution;
 import org.deidentifier.arx.gui.view.SWTUtil;
 import org.deidentifier.arx.masking.RandomShiftDecimalMasker;
@@ -20,7 +21,7 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 	
 	private Button btnShiftConstant;
 	
-	private Spinner spnShiftConstantInput;
+	private Text txtShiftConstantInput;
 	
 	private Boolean shiftConstantValid = false;
 	private Boolean distributionValid = false;
@@ -66,28 +67,25 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		this.btnShiftConstant = new Button(this.cmpShift, SWT.CHECK);
 		this.btnShiftConstant.setLayoutData(SWTUtil.createGridData());
 		
-		this.spnShiftConstantInput = new Spinner(this.cmpShift, SWT.BORDER);
-		this.spnShiftConstantInput.setEnabled(false);
-		this.spnShiftConstantInput.setDigits(2);
-		this.spnShiftConstantInput.setMaximum(100000);
-		this.spnShiftConstantInput.setMinimum(-100000);
-		this.spnShiftConstantInput.setLayoutData(SWTUtil.createGridData());
+		this.txtShiftConstantInput = new Text(this.cmpShift, SWT.BORDER);
+		this.txtShiftConstantInput.setEnabled(false);
+		this.txtShiftConstantInput.setLayoutData(SWTUtil.createGridData());
 		
 		this.btnShiftConstant.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				if (btnShiftConstant.getSelection()) {
-					spnShiftConstantInput.setEnabled(true);
-					validateSpnShiftConstantInput();
+					txtShiftConstantInput.setEnabled(true);
+					validateTxtShiftConstantInput();
 				} else {
-					spnShiftConstantInput.setEnabled(false);
-					validateSpnShiftConstantInput();
+					txtShiftConstantInput.setEnabled(false);
+					validateTxtShiftConstantInput();
 				}
 			}
 		});
 		
-		this.spnShiftConstantInput.addModifyListener(new ModifyListener() {
+		this.txtShiftConstantInput.addModifyListener(new ModifyListener() {
 		    public void modifyText(ModifyEvent arg0) {
-                validateSpnShiftConstantInput();
+                validateTxtShiftConstantInput();
             }
 
 		});
@@ -98,7 +96,7 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
             }
 
 		});
-		this.validateSpnShiftConstantInput();
+		this.validateTxtShiftConstantInput();
 		this.validateDistribution();
 	}
 	
@@ -106,17 +104,18 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		this.distributionValid = this.distribution.isValid();		
 	}
 
-	private void validateSpnShiftConstantInput() {
-		if(this.spnShiftConstantInput.getEnabled()){
-			double input = this.spnShiftConstantInput.getSelection()*.01d;
-			this.shiftConstantValid = !(input == 0.00d);
-			if(this.shiftConstantValid) 
-				this.spnShiftConstantInput.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
-			else
-				this.spnShiftConstantInput.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));			
-		}
-		else
+	private void validateTxtShiftConstantInput() {
+		if(!this.txtShiftConstantInput.getEnabled()){
 			this.shiftConstantValid = true;
+		}
+		else if(NumberUtils.isNumber(this.txtShiftConstantInput.getText())){
+			this.shiftConstantValid = true;
+			this.txtShiftConstantInput.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+		}
+		else{
+			this.shiftConstantValid = false;
+			this.txtShiftConstantInput.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
+		}
 	}
 
 	public boolean isValid() {
@@ -125,7 +124,7 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 
 	public void addModifyListener(ModifyListener listener) {
 	    this.distribution.addModifyListener(listener);
-	    this.spnShiftConstantInput.addModifyListener(listener);
+	    this.txtShiftConstantInput.addModifyListener(listener);
 	}
 	
 	public void addSelectionListener(SelectionAdapter adapter){
@@ -134,12 +133,12 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 	}
 	
 	public RandomShiftDecimalMasker getMasker(){
-		RealDistribution dist = this.distribution.getDistribution(); // TODO: getDistribution() 
+		RealDistribution dist = this.distribution.getDistribution();
 		if(!this.btnShiftConstant.getSelection()){
 			return new RandomShiftDecimalMasker(dist);
 		}
 		else{
-			return new RandomShiftDecimalMasker(dist, this.spnShiftConstantInput.getSelection()*.01d);
+			return new RandomShiftDecimalMasker(dist, Double.parseDouble(this.txtShiftConstantInput.getText()));
 		}
 	}
 	// For testing purposes
