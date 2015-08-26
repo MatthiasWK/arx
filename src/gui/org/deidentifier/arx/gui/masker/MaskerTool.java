@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.TabItem;
 
 public class MaskerTool {
 	public static void main(String[] args) {
-		Display display = new Display();
+		final Display display = new Display();
 		Shell shell = new Shell (display);
 		shell.setText("Masker Tool");
 		shell.setLayout(SWTUtil.createGridLayout(1));
@@ -26,23 +26,24 @@ public class MaskerTool {
 		final TabFolder tabFolder = new TabFolder(shell, SWT.BORDER);
 		
 		String[] maskerTypes = {	"GenerateRandomDateMasker",
+									"GenerateRandomStringMasker",
+									"RandomShiftDecimalMasker",
+									"MatchAndReplaceStringMasker" /*,
+				
 									"GenerateRandomDecimalMasker",
 									"GenerateRandomIntegerDecimalMasker",
-									"GenerateRandomStringMasker",
 									"ReplaceDictMasker",
 									"ReplaceInstMasker",
 									"ConstantShiftDateMasker",
 									"ConstantShiftDecimalMasker",
-									"MatchAndReplaceStringMasker",
 									"RandomShiftDateMasker",
-									"RandomShiftDecimalMasker",
 									"ShuffleMasker",
-									"SplitAndReplaceStringMasker"
+									"SplitAndReplaceStringMasker"*/
 								};
 
-		final ConfigurationComponent[] GUIs = new ConfigurationComponent[13];
+		final ConfigurationComponent[] GUIs = new ConfigurationComponent[maskerTypes.length];
 		
-	    for (int loopIndex = 0; loopIndex < 13; loopIndex++) {
+	    for (int loopIndex = 0; loopIndex < GUIs.length; loopIndex++) {
 	    	TabItem tabItem = new TabItem(tabFolder, SWT.NULL);
 	      	tabItem.setText(maskerTypes[loopIndex]);
 	      
@@ -55,34 +56,35 @@ public class MaskerTool {
 	      			GUIs[loopIndex] = new GenerateRandomDateMaskerGUI(base);
 	      			break;
 	      		case 1:
-	      			GUIs[loopIndex] = new GenerateRandomDecimalMaskerGUI(base);
-	      			break;
-	      		case 2:
-	      			GUIs[loopIndex] = new GenerateRandomIntegerDecimalMaskerGUI(base);
-	      			break;
-	      		case 3:
 	      			GUIs[loopIndex] = new GenerateRandomStringMaskerGUI(base);
 	      			break;
-	      		case 4:
-	      			GUIs[loopIndex] = new ReplaceDictMaskerGUI(base);
+	      	    case 2:
+	      	    	GUIs[loopIndex] = new RandomShiftDecimalMaskerGUI(base);
 	      			break;
-	      		case 5:
-	      			GUIs[loopIndex] = new ReplaceInstMaskerGUI(base);
-	      			break;
-	      		case 6:
-	      			GUIs[loopIndex] = new ConstantShiftDateMaskerGUI(base);
-	      			break;
-	      		case 7:
-	      			GUIs[loopIndex] = new ConstantShiftDecimalMaskerGUI(base);
-	      			break;
-	      		case 8:
+	      		case 3:
 	      			GUIs[loopIndex] = new MatchAndReplaceStringMaskerGUI(base);
 	      			break;
-	      		case 9:
-	      			GUIs[loopIndex] = new RandomShiftDateMaskerGUI(base);
+	      			/*
+	      		case 4:
+	      			GUIs[loopIndex] = new GenerateRandomDecimalMaskerGUI(base);
 	      			break;
-	      	    case 10:
-	      	    	GUIs[loopIndex] = new RandomShiftDecimalMaskerGUI(base);
+	      		case 5:
+	      			GUIs[loopIndex] = new GenerateRandomIntegerDecimalMaskerGUI(base);
+	      			break;
+	      		case 6:
+	      			GUIs[loopIndex] = new ReplaceDictMaskerGUI(base);
+	      			break;
+	      		case 7:
+	      			GUIs[loopIndex] = new ReplaceInstMaskerGUI(base);
+	      			break;
+	      		case 8:
+	      			GUIs[loopIndex] = new ConstantShiftDateMaskerGUI(base);
+	      			break;
+	      		case 9:
+	      			GUIs[loopIndex] = new ConstantShiftDecimalMaskerGUI(base);
+	      			break;
+	      		case 10:
+	      			GUIs[loopIndex] = new RandomShiftDateMaskerGUI(base);
 	      			break;
 	      		case 11:
 	      			GUIs[loopIndex] = new ShuffleMaskerGUI(base);
@@ -90,6 +92,7 @@ public class MaskerTool {
 	      		case 12:
 	      			GUIs[loopIndex] = new SplitAndReplaceStringMaskerGUI(base);
 	      			break;
+	      			*/
 	      	}
 	    }
 
@@ -128,22 +131,33 @@ public class MaskerTool {
 	    	});
 	    }
 	    
+	    // just to test for exceptions
 	    ok.addSelectionListener(new SelectionAdapter(){
 	    	public void widgetSelected(SelectionEvent event) {
 	    		switch(tabFolder.getSelectionIndex()){
+	    		case 0:
+	    			GenerateRandomDateMasker masker0 = ((GenerateRandomDateMaskerGUI) GUIs[0]).getMasker();
+	    			System.out.println(masker0.createReplacement());
+	    			break;
+	    		case 1:
+	    			GenerateRandomStringMasker masker1 = ((GenerateRandomStringMaskerGUI) GUIs[1]).getMasker();
+	    			System.out.println(masker1.mask("please replace me"));
+	    			break;
+	    		case 2:
+	    			RandomShiftDecimalMasker masker2 = ((RandomShiftDecimalMaskerGUI) GUIs[2]).getMasker();
+	    			System.out.println(masker2.mask(3.14));
+	    			break;
 	    		case 3:
-	    			GenerateRandomStringMasker masker3 = ((GenerateRandomStringMaskerGUI) GUIs[3]).getMasker();
-	    			System.out.println(masker3);
-	    			break;
-	    		case 8:
-	    			MatchAndReplaceStringMasker masker8 = ((MatchAndReplaceStringMaskerGUI) GUIs[8]).getMasker();
-	    			System.out.println(masker8);
-	    			break;
-	    		case 10:
-	    			RandomShiftDecimalMasker masker10 = ((RandomShiftDecimalMaskerGUI) GUIs[10]).getMasker();
-	    			System.out.println(masker10);
+	    			MatchAndReplaceStringMasker masker3 = ((MatchAndReplaceStringMaskerGUI) GUIs[3]).getMasker();
+	    			System.out.println(masker3.mask("please mask me"));
 	    			break;
 	    		}
+	    	}
+	    });
+	    
+	    cancel.addSelectionListener(new SelectionAdapter(){
+	    	public void widgetSelected(SelectionEvent event) {
+	    		display.close();
 	    	}
 	    });
 	    

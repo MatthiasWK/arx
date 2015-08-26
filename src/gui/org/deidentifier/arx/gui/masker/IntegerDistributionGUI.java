@@ -480,21 +480,18 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 		IntegerDistribution dist = null;
 		switch(this.cmbDropdown.getSelectionIndex()){
 			case 0: // Binomial
-				double txtInput = Double.parseDouble(this.txt1.getText());
-				dist = new BinomialDistribution(this.spn1.getSelection(), txtInput);
+				dist = new BinomialDistribution(this.spn1.getSelection(), Double.parseDouble(this.txt1.getText()));
 				break;
 			case 1: // Poisson
-				double txt1Input = Double.parseDouble(this.txt1.getText());
-				double txt2Input = Double.parseDouble(this.txt2.getText());
 				
 				if(!btn1.getSelection() && !btn2.getSelection())
-					dist = new PoissonDistribution(txt1Input);
+					dist = new PoissonDistribution(Double.parseDouble(this.txt1.getText()));
 				else if(btn1.getSelection() && !btn2.getSelection())
-					dist = new PoissonDistribution(txt1Input, txt2Input);
+					dist = new PoissonDistribution(Double.parseDouble(this.txt1.getText()), Double.parseDouble(this.txt2.getText()));
 				else if(!btn1.getSelection() && btn2.getSelection())
-					dist = new PoissonDistribution(txt1Input, spn1.getSelection());	
+					dist = new PoissonDistribution(Double.parseDouble(this.txt1.getText()), spn1.getSelection());	
 				else if(btn1.getSelection() && btn2.getSelection())
-					dist = new PoissonDistribution(txt1Input, txt2Input, spn1.getSelection());					
+					dist = new PoissonDistribution(Double.parseDouble(this.txt1.getText()), Double.parseDouble(this.txt2.getText()), spn1.getSelection());					
 				break;
 			case 2: // Uniform Integer
 				dist = new UniformIntegerDistribution(spn1.getSelection(), spn2.getSelection());
