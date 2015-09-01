@@ -89,7 +89,7 @@ public class GenerateRandomStringMasker extends AbstractInstBasedDictMasker<Stri
 	 * characters are used.
 	 */
 	public GenerateRandomStringMasker(int length, char[] charSet) {
-		this(length, true, false, charSet);
+		this(length, true, true, charSet);
 	}
 	
 	/**
