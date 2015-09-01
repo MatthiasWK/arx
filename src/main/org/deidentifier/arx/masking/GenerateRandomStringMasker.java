@@ -26,6 +26,8 @@ public class GenerateRandomStringMasker extends AbstractInstBasedDictMasker<Stri
 	/** An optional set of characters to choose from. If null, all characters are used. */
 	private char[] charSet = null;
 	
+	/** length of the character set. */
+	private int end = 0;
 	
 	/**
 	 * Creates a masker generating strings with the same length as the input, using only
@@ -120,8 +122,10 @@ public class GenerateRandomStringMasker extends AbstractInstBasedDictMasker<Stri
 		if (length < 0)	stringLength = input.length();
 		else			stringLength = length;
 		
+		if (charSet != null) end = charSet.length;
+		
 		return RandomStringUtils.
-				random(stringLength, 0, 0, letters, numbers, charSet, Random.staticInstance);
+				random(stringLength, 0, end, letters, numbers, charSet, Random.staticInstance);
 	}
 	
 }
