@@ -3,6 +3,7 @@ import org.deidentifier.arx.masking.GenerateRandomDateMasker;
 import org.deidentifier.arx.masking.GenerateRandomStringMasker;
 import org.deidentifier.arx.masking.MatchAndReplaceStringMasker;
 import org.deidentifier.arx.masking.RandomShiftDecimalMasker;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -11,6 +12,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
@@ -19,7 +21,7 @@ import org.eclipse.swt.widgets.TabItem;
 public class MaskerTool {
 	public static void main(String[] args) {
 		final Display display = new Display();
-		Shell shell = new Shell (display);
+		final Shell shell = new Shell (display);
 		shell.setText("Masker Tool");
 		shell.setLayout(SWTUtil.createGridLayout(1));
 		
@@ -134,22 +136,30 @@ public class MaskerTool {
 	    // just to test for exceptions
 	    ok.addSelectionListener(new SelectionAdapter(){
 	    	public void widgetSelected(SelectionEvent event) {
+//	    		InputDialog dlg = new InputDialog(shell, "bla", "bla", "bla", null);
+//	    		MyDialog dlg = new MyDialog(shell);
+//	    		dlg.open();
+	    		
 	    		switch(tabFolder.getSelectionIndex()){
 	    		case 0:
 	    			GenerateRandomDateMasker masker0 = ((GenerateRandomDateMaskerGUI) GUIs[0]).getMasker();
-	    			System.out.println(masker0.createReplacement());
+	    			GenerateRandomDateDialog dlg0 = new GenerateRandomDateDialog(shell, masker0);
+	    			dlg0.open();
 	    			break;
 	    		case 1:
 	    			GenerateRandomStringMasker masker1 = ((GenerateRandomStringMaskerGUI) GUIs[1]).getMasker();
-	    			System.out.println(masker1.mask("please replace me"));
+	    			GenerateRandomStringDialog dlg1 = new GenerateRandomStringDialog(shell, masker1);
+		    		dlg1.open();
 	    			break;
 	    		case 2:
 	    			RandomShiftDecimalMasker masker2 = ((RandomShiftDecimalMaskerGUI) GUIs[2]).getMasker();
-	    			System.out.println(masker2.mask(3.14));
+	    			RandomShiftDecimalDialog dlg2 = new RandomShiftDecimalDialog(shell, masker2);
+		    		dlg2.open();
 	    			break;
 	    		case 3:
 	    			MatchAndReplaceStringMasker masker3 = ((MatchAndReplaceStringMaskerGUI) GUIs[3]).getMasker();
-	    			System.out.println(masker3.mask("please mask me"));
+	    			MatchAndReplaceStringDialog dlg3 = new MatchAndReplaceStringDialog(shell, masker3);
+		    		dlg3.open();
 	    			break;
 	    		}
 	    	}
