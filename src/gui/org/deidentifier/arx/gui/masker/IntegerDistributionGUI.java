@@ -102,7 +102,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								lbl1.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 								
 								spn1 = new Spinner(cmpParam, SWT.BORDER);
-								spn1.setMaximum(1000000);
+								spn1.setMaximum(Integer.MAX_VALUE);
 								spn1.setLayoutData(SWTUtil.createGridData());
 								
 								lbl2 = new Label(cmpParam, SWT.NONE);
@@ -162,7 +162,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 							    
 							    spn1 = new Spinner(cmpParam, SWT.BORDER);
 							    spn1.setEnabled(false);
-							    spn1.setMaximum(10000000);
+							    spn1.setMaximum(Integer.MAX_VALUE);
 							    spn1.setLayoutData(SWTUtil.createGridData());
 							    
 								btn2.addSelectionListener(new SelectionAdapter() {
@@ -200,7 +200,8 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								lbl1.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 								
 								spn1 = new Spinner(cmpParam, SWT.BORDER);
-								spn1.setMaximum(1000000);
+								spn1.setMaximum(Integer.MAX_VALUE);
+								spn1.setMinimum(Integer.MIN_VALUE);
 								spn1.setLayoutData(SWTUtil.createGridData());
 
 								lbl2 = new Label(cmpParam, SWT.NONE);
@@ -208,7 +209,8 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								lbl2.setLayoutData(SWTUtil.createSpanColumnsGridData(1));
 								
 								spn2= new Spinner(cmpParam, SWT.BORDER);
-								spn2.setMaximum(1000000);
+								spn2.setMaximum(Integer.MAX_VALUE);
+								spn2.setMinimum(Integer.MIN_VALUE);
 								spn2.setLayoutData(SWTUtil.createGridData());
 								
 								spn1.addModifyListener(new ModifyListener(){

@@ -8,7 +8,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.widgets.DateTime;
 import org.joda.time.Period;
 
 public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
@@ -73,7 +72,8 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		
 		this.spnShiftConstant = new Spinner(this.cmpConfig, SWT.BORDER);
 		this.spnShiftConstant.setEnabled(false);
-		this.spnShiftConstant.setMaximum(100000);
+		this.spnShiftConstant.setMaximum(Integer.MAX_VALUE);
+		this.spnShiftConstant.setMinimum(Integer.MIN_VALUE);
 		
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("(int)");
@@ -104,25 +104,29 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 		
 		this.spnDays = new Spinner(this.cmpConfig, SWT.BORDER);
 		this.spnDays.setEnabled(false);
-		this.spnDays.setMaximum(100000);
+		this.spnDays.setMaximum(Integer.MAX_VALUE);
+		this.spnDays.setMinimum(Integer.MIN_VALUE);
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("days");
 		
 		this.spnWeeks = new Spinner(this.cmpConfig, SWT.BORDER);
 		this.spnWeeks.setEnabled(false);
-		this.spnWeeks.setMaximum(100000);
+		this.spnWeeks.setMaximum(Integer.MAX_VALUE);
+		this.spnWeeks.setMinimum(Integer.MIN_VALUE);
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("weeks");
 		
 		this.spnMonths = new Spinner(this.cmpConfig, SWT.BORDER);
 		this.spnMonths.setEnabled(false);
-		this.spnMonths.setMaximum(100000);
+		this.spnMonths.setMaximum(Integer.MAX_VALUE);
+		this.spnMonths.setMinimum(Integer.MIN_VALUE);
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("months");
 		
 		this.spnYears = new Spinner(this.cmpConfig, SWT.BORDER);
 		this.spnYears.setEnabled(false);
-		this.spnYears.setMaximum(100000);
+		this.spnYears.setMaximum(Integer.MAX_VALUE);
+		this.spnYears.setMinimum(Integer.MIN_VALUE);
 		this.lbl = new Label(this.cmpConfig, SWT.NULL);
 		this.lbl.setText("years");
 		
@@ -193,10 +197,10 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	
 	private void validateBasePeriod() {
 		if (this.btnCheckBasePeriod.getSelection()) {
-			if (this.spnDays.getSelection() > 0 || this.spnWeeks.getSelection() > 0 ||
-					this.spnMonths.getSelection()> 0 || this.spnYears.getSelection() > 0 ||
-					this.dtTimePeriod.getHours() > 0 || this.dtTimePeriod.getMinutes() > 0 ||
-					this.dtTimePeriod.getSeconds() > 0) {
+			if (this.spnDays.getSelection() != 0 || this.spnWeeks.getSelection() != 0 ||
+					this.spnMonths.getSelection()!= 0 || this.spnYears.getSelection() != 0 ||
+					this.dtTimePeriod.getHours() != 0 || this.dtTimePeriod.getMinutes() != 0 ||
+					this.dtTimePeriod.getSeconds() != 0) {
 				this.basePeriodValid = true;
 			} else {
 				this.basePeriodValid = false;

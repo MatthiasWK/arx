@@ -797,12 +797,19 @@ private ModifyListener MListener;
 			break;
 		case 2: // Chi Squared
 			if(NumberUtils.isNumber(this.txt1.getText())){
-				this.txt1Valid = true;
-				this.txt1.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+				double inputDouble = Double.parseDouble(this.txt1.getText());
+				if(inputDouble > 0.0){
+					this.txt1Valid = true;
+					this.txt1.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+				}
+				else{
+					this.txt1Valid = false;
+					txt1.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
+				}
 			}
 			else{
 				this.txt1Valid = false;
-				this.txt1.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
+				txt1.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
 			}
 			break;
 		}

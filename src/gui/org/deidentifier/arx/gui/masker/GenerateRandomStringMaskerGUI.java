@@ -148,7 +148,7 @@ public class GenerateRandomStringMaskerGUI implements ConfigurationComponent {
  	 	
        	this.spnLength = new Spinner(this.cmpLength, SWT.BORDER);
   		this.spnLength.setEnabled(false);
-  		this.spnLength.setMaximum(100000);
+  		this.spnLength.setMaximum(Integer.MAX_VALUE);
   		this.spnLength.setLayoutData(SWTUtil.createGridData());
  		
   		this.btnLength.addSelectionListener(new SelectionAdapter() {
