@@ -30,17 +30,7 @@ public class MaskerTool {
 		String[] maskerTypes = {	"GenerateRandomDateMasker",
 									"GenerateRandomStringMasker",
 									"RandomShiftDecimalMasker",
-									"MatchAndReplaceStringMasker" /*,
-				
-									"GenerateRandomDecimalMasker",
-									"GenerateRandomIntegerDecimalMasker",
-									"ReplaceDictMasker",
-									"ReplaceInstMasker",
-									"ConstantShiftDateMasker",
-									"ConstantShiftDecimalMasker",
-									"RandomShiftDateMasker",
-									"ShuffleMasker",
-									"SplitAndReplaceStringMasker"*/
+									"MatchAndReplaceStringMasker" 
 								};
 
 		final ConfigurationComponent[] GUIs = new ConfigurationComponent[maskerTypes.length];
@@ -66,35 +56,7 @@ public class MaskerTool {
 	      		case 3:
 	      			GUIs[loopIndex] = new MatchAndReplaceStringMaskerGUI(base);
 	      			break;
-	      			/*
-	      		case 4:
-	      			GUIs[loopIndex] = new GenerateRandomDecimalMaskerGUI(base);
-	      			break;
-	      		case 5:
-	      			GUIs[loopIndex] = new GenerateRandomIntegerDecimalMaskerGUI(base);
-	      			break;
-	      		case 6:
-	      			GUIs[loopIndex] = new ReplaceDictMaskerGUI(base);
-	      			break;
-	      		case 7:
-	      			GUIs[loopIndex] = new ReplaceInstMaskerGUI(base);
-	      			break;
-	      		case 8:
-	      			GUIs[loopIndex] = new ConstantShiftDateMaskerGUI(base);
-	      			break;
-	      		case 9:
-	      			GUIs[loopIndex] = new ConstantShiftDecimalMaskerGUI(base);
-	      			break;
-	      		case 10:
-	      			GUIs[loopIndex] = new RandomShiftDateMaskerGUI(base);
-	      			break;
-	      		case 11:
-	      			GUIs[loopIndex] = new ShuffleMaskerGUI(base);
-	      			break;
-	      		case 12:
-	      			GUIs[loopIndex] = new SplitAndReplaceStringMaskerGUI(base);
-	      			break;
-	      			*/
+	      			
 	      	}
 	    }
 
@@ -133,12 +95,9 @@ public class MaskerTool {
 	    	});
 	    }
 	    
-	    // just to test for exceptions
+	    
 	    ok.addSelectionListener(new SelectionAdapter(){
 	    	public void widgetSelected(SelectionEvent event) {
-//	    		InputDialog dlg = new InputDialog(shell, "bla", "bla", "bla", null);
-//	    		MyDialog dlg = new MyDialog(shell);
-//	    		dlg.open();
 	    		
 	    		switch(tabFolder.getSelectionIndex()){
 	    		case 0:

@@ -17,21 +17,16 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 	
 	private Label lblDist;
 	private Label lblShift;
-	private Label lblDescription;
 	
 	private Button btnShiftConstant;
 	
 	private Text txtShiftConstantInput;
 	
 	private Boolean shiftConstantValid = false;
-	private Boolean distributionValid = false;
 	
 	private RealDistributionGUI distribution;
 
 	private Composite cmpRoot;
-	private Composite cmpDesc;
-	private Composite cmpConfig;
-	private Composite cmpDist;
 	private Composite cmpShift;
 	
 	public RandomShiftDecimalMaskerGUI(Composite root) {
@@ -39,14 +34,6 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 		this.cmpRoot = new Composite(root, SWT.NONE);	
 		this.cmpRoot.setLayout(SWTUtil.createGridLayout(1));
 		
-		// Description
-//		this.cmpDesc = new Composite(cmpRoot, SWT.BORDER);
-//		this.cmpDesc.setLayoutData(SWTUtil.createFillHorizontallyGridData());
-//		this.cmpDesc.setLayout(SWTUtil.createGridLayout(1));
-//		this.lblDescription = new Label(this.cmpDesc, SWT.NONE);
-// 		this.lblDescription.setText("A masker that shifts decimal numbers randomly according to a given probability distribution.\nThe shift is calculated by sampling from the provided distribution.\nOptionally, a shift constant can be added to the sampled value as to allow a quick and very basic modification of the distribution.");
-//		this.lblDescription.setLayoutData(SWTUtil.createGridData());
-
       	// Real distribution
  		
 		this.lblDist = new Label(this.cmpRoot, SWT.NONE);
@@ -90,20 +77,9 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 
 		});
 		
-		this.distribution.addModifyListener(new ModifyListener() {
-		    public void modifyText(ModifyEvent arg0) {
-                validateDistribution();
-            }
-
-		});
 		this.validateTxtShiftConstantInput();
-		this.validateDistribution();
 	}
 	
-	private void validateDistribution() {
-		this.distributionValid = this.distribution.isValid();		
-	}
-
 	private void validateTxtShiftConstantInput() {
 		if(!this.txtShiftConstantInput.getEnabled()){
 			this.shiftConstantValid = true;
@@ -141,53 +117,4 @@ public class RandomShiftDecimalMaskerGUI implements ConfigurationComponent{
 			return new RandomShiftDecimalMasker(dist, Double.parseDouble(this.txtShiftConstantInput.getText()));
 		}
 	}
-	// For testing purposes
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell (display);
-		shell.setLayout(SWTUtil.createGridLayout(1));
-		Composite root = new Composite(shell, SWT.NONE);	
-		root.setLayout(new FillLayout() );
-		root.setLayoutData(SWTUtil.createFillGridData());
-		
-		final ConfigurationComponent cmp = new RandomShiftDecimalMaskerGUI(root);
-		
-		Composite buttons = new Composite(shell, SWT.NONE);
-	    buttons.setLayout(SWTUtil.createGridLayout(2));
-	    buttons.setLayoutData(SWTUtil.createFillHorizontallyGridData());
-	    
-		final Button next = new Button(buttons, SWT.PUSH);
-		next.setText("ok");
-		next.setLayoutData(SWTUtil.createFillHorizontallyGridData());
-		next.setEnabled(cmp.isValid());
-		
-		next.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				RandomShiftDecimalMasker masker = ((RandomShiftDecimalMaskerGUI) cmp).getMasker();
-			}
-		});
-
-		cmp.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent arg0) {
-				next.setEnabled(cmp.isValid());				
-			}
-			
-		});
-		
-		cmp.addSelectionListener(new SelectionAdapter(){
-			public void  widgetSelected(SelectionEvent event) {
-				next.setEnabled(cmp.isValid());				
-			}
-			
-		});
-		shell.pack ();
-		shell.open ();
-
-		while (!shell.isDisposed ()) {
-			if (!display.readAndDispatch ())
-				display.sleep ();
-		}
-		display.dispose ();
-	}
 }
-

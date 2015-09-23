@@ -40,8 +40,6 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 	private Spinner spn1;
 	private Spinner spn2;
 	
-	private Text txtSingletons;
-	private Text txtProbabilities;
 	private Text txt1;
 	private Text txt2;
 	
@@ -69,13 +67,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 		String[] distributions = {	
 									"Binomial Distribution",
 									"Poisson Distribution",
-									"Uniform Integer Distribution"/*,
-									"Abstract Integer Distribution",
-									"Enumerated Integer Distribution",
-									"Geometric Distribution",
-									"Hypergeometric Distribution",
-									"Pascal Distribution",
-									"Zipf Distribution"*/
+									"Uniform Integer Distribution"
 								 };
 		for (String s: distributions) {
 			this.cmbDropdown.add(s);
@@ -94,7 +86,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 						switch (selectedIndex) {
 							
 							case 0: // Binomial Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int trials, double p");
+//								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int trials, double p");
 								cmpParam.setLayout(SWTUtil.createGridLayout(2));
 								
 								lbl1 = new Label(cmpParam, SWT.NONE);
@@ -120,7 +112,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								txt1.addModifyListener(MListener);
 								break;
 							case 1: // Poisson Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double p [, double epsilon] [, int maxIterations]");
+//								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double p [, double epsilon] [, int maxIterations]");
 								cmpParam.setLayout(SWTUtil.createGridLayout(3));
 
 								lbl1 = new Label(cmpParam, SWT.NONE);
@@ -192,7 +184,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								btn1.addSelectionListener(SAdapter);
 								break;
 							case 2: // Uniform Integer Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int lower, int upper");
+//								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int lower, int upper");
 								cmpParam.setLayout(SWTUtil.createGridLayout(2));
 								
 								lbl1 = new Label(cmpParam, SWT.NONE);
@@ -231,113 +223,7 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 								spn2.addModifyListener(MListener);
 
 								break;
-								/*
-							case 3: // Enumerated Integer Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int[] singletons, double[] probabilities");
-								cmpParam.setLayout(new GridLayout (2, false));
 								
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("array of random\n variable values\n (int values)");
-								txtSingletons = new Text(cmpParam, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-								GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
-								gridData.heightHint = 30;
-								txtSingletons.setLayoutData(gridData);
-								
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("array of probabilities\n (double values)");
-								txtProbabilities = new Text(cmpParam, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-								gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
-								gridData.heightHint = 30;
-								txtProbabilities.setLayoutData(gridData);
-								
-								cmpParam.layout();
-								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								cmpRoot.layout();
-								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								break;
-							case 4: // Abstract Integer Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": RandomGenerator rng");
-								break;
-							case 5: // Geometric Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] double p");
-								cmpParam.setLayout(new GridLayout (2, false));
-								
-								spn1 = new Spinner(cmpParam, SWT.BORDER);
-								spn1.setDigits(2);
-								spn1.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("probability of success");
-								
-								cmpParam.layout();
-								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								cmpRoot.layout();
-								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								break;
-							case 6: // Hypergeometric Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int populationSize, int numberOfSuccesses, int sampleSize");
-								cmpParam.setLayout(new GridLayout (2, false));
-								
-								spn1 = new Spinner(cmpParam, SWT.BORDER);
-								spn1.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("population size");
-								
-								spn2 = new Spinner(cmpParam, SWT.BORDER);
-								spn2.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("number of successes");
-								
-								spn3 = new Spinner(cmpParam, SWT.BORDER);
-								spn3.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("sample size");
-								
-								cmpParam.layout();
-								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								cmpRoot.layout();
-								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								break;
-							case 7: // Pascal Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int r, double p");
-								cmpParam.setLayout(new GridLayout (2, false));
-								
-								spn1 = new Spinner(cmpParam, SWT.BORDER);
-								spn1.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("number of successes");
-								
-								spn2 = new Spinner(cmpParam, SWT.BORDER);
-								spn2.setDigits(2);
-								spn2.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("probability of success");
-								
-								cmpParam.layout();
-								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								cmpRoot.layout();
-								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								break;
-							case 8: // Zipf Distribution
-								System.out.println("Needed parameters for " + cmbDropdown.getItem(selectedIndex) + ": [RandomGenerator rng,] int numberOfElements, double exponent");
-								cmpParam.setLayout(new GridLayout (2, false));
-								
-								spn1 = new Spinner(cmpParam, SWT.BORDER);
-								spn1.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("number of elements");
-								
-								spn2 = new Spinner(cmpParam, SWT.BORDER);
-								spn2.setDigits(2);
-								spn2.setMaximum(100000);
-								lbl = new Label(cmpParam, SWT.NULL);
-								lbl.setText("exponent");
-								
-								cmpParam.layout();
-								cmpParam.setSize(cmpParam.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								cmpRoot.layout();
-								cmpRoot.setSize(cmpRoot.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-								break;
-								*/
 						}
 
 					    validateSpn1();

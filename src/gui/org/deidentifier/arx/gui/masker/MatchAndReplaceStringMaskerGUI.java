@@ -83,7 +83,7 @@ public class MatchAndReplaceStringMaskerGUI implements ConfigurationComponent {
 			  txtRegEx.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_BLACK));
 			} catch (PatternSyntaxException e) {
 				isRegEx= false;
-			  txtRegEx.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
+			    txtRegEx.setForeground(cmpRoot.getDisplay().getSystemColor(SWT.COLOR_RED));
 			}
 		regExValid = isRegEx && !input.isEmpty();
 	}

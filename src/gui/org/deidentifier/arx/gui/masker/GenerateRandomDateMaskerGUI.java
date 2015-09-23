@@ -13,7 +13,6 @@ import org.joda.time.Period;
 public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	
 	private Composite cmpRoot;
-	private Composite cmpDist;
 	private Composite cmpConfig;
 	
 	private Label lbl;
@@ -233,7 +232,7 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 	}
 
 	public GenerateRandomDateMasker getMasker() {
-		IntegerDistribution dist = this.distribution.getDistribution(); // TODO: getDistribution()
+		IntegerDistribution dist = this.distribution.getDistribution();
 		org.joda.time.DateTime baseDate = new org.joda.time.DateTime(	this.dtDate.getYear(),
 																		this.dtDate.getMonth()+1,
 																		this.dtDate.getDay(),
@@ -267,53 +266,4 @@ public class GenerateRandomDateMaskerGUI implements ConfigurationComponent {
 			return new GenerateRandomDateMasker(dist, baseDate);
 		}
 	}
-
-	// For testing purposes
-		public static void main(String[] args) {
-			Display display = new Display();
-			Shell shell = new Shell (display);
-			shell.setLayout(SWTUtil.createGridLayout(1));
-			Composite root = new Composite(shell, SWT.NONE);	
-			root.setLayout(new FillLayout());
-			root.setLayoutData(SWTUtil.createFillGridData());
-			
-			final ConfigurationComponent cmp = new GenerateRandomDateMaskerGUI(root);
-			
-			Composite buttons = new Composite(shell, SWT.NONE);
-		    buttons.setLayout(SWTUtil.createGridLayout(2));
-		    buttons.setLayoutData(SWTUtil.createFillHorizontallyGridData());
-		    
-			final Button next = new Button(buttons, SWT.PUSH);
-			next.setText("ok");
-			next.setLayoutData(SWTUtil.createFillHorizontallyGridData());
-			next.setEnabled(cmp.isValid());
-			
-			next.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent event) {
-					GenerateRandomDateMasker masker = ((GenerateRandomDateMaskerGUI) cmp).getMasker();
-				}
-			});
-
-			cmp.addModifyListener(new ModifyListener(){
-				public void modifyText(ModifyEvent arg0) {
-					next.setEnabled(cmp.isValid());				
-				}
-				
-			});
-			
-			cmp.addSelectionListener(new SelectionAdapter(){
-				public void  widgetSelected(SelectionEvent event) {
-					next.setEnabled(cmp.isValid());				
-				}
-				
-			});
-			shell.pack ();
-			shell.open ();
-
-			while (!shell.isDisposed ()) {
-				if (!display.readAndDispatch ())
-					display.sleep ();
-			}
-			display.dispose ();
-		}
 }
