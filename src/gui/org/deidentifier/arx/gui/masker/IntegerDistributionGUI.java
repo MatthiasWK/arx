@@ -387,43 +387,5 @@ public class IntegerDistributionGUI implements ConfigurationComponent{
 		}
 		return dist;
 	}
-	// For testing purposes
-	public static void main(String[] args) {
-		Display display = new Display ();
-		Shell shell = new Shell (display);
-		shell.setLayout (SWTUtil.createGridLayout(1));
-		shell.setText("IntegerDistribution");
-
-		final IntegerDistributionGUI c1 = new IntegerDistributionGUI(shell);
-		
-		final Button ok = new Button(shell, SWT.PUSH);
-		ok.setText("ok");
-		ok.setEnabled(c1.isValid());
-		ok.addSelectionListener(new SelectionAdapter(){
-			public void widgetSelected(SelectionEvent event) {
-				c1.getDistribution();
-			}
-		});
-		
-		c1.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent arg0) {
-				ok.setEnabled(c1.isValid());
-			}
-    	});
-		c1.addSelectionListener(new SelectionAdapter(){
-			public void  widgetSelected(SelectionEvent event) {
-				ok.setEnabled(c1.isValid());				
-			}
-			
-		});
-		shell.pack ();
-		shell.open ();
-
-		while (!shell.isDisposed ()) {
-			if (!display.readAndDispatch ())
-				display.sleep ();
-		}
-		display.dispose ();
-	}
 	
 }
